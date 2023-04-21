@@ -64,3 +64,41 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+## frontend .gitignore stuff
+
+./frontend/.DS_Store
+./frontend/node_modules
+./frontend//dist
+
+
+# local env files
+./frontend/.env.local
+./frontend/.env.*.local
+
+# Log files
+./frontend/npm-debug.log*
+./frontend/yarn-debug.log*
+./frontend/yarn-error.log*
+./frontend/pnpm-debug.log*
+
+# Editor directories and files
+./frontend/.idea
+./frontend/.vscode
+./frontend/*.suo
+./frontend/*.ntvs*
+./frontend/*.njsproj
+./frontend/*.sln
+./frontend/*.sw?
+
+## functions .gitignore stuff
+
+# Compiled JavaScript files
+./functions/lib/**/*.js
+./functions/lib/**/*.js.map
+
+# TypeScript v1 declaration files
+./functions/typings/
+
+# Node.js dependency directory
+./functions/node_modules/

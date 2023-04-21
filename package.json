@@ -14,6 +14,7 @@
   "author": "Sam Fruechtemeyer, Eric Bender, Elijah Watson",
   "license": "ISC",
   "devDependencies": {
+    "browser-sync": "^2.29.1",
     "concurrently": "^8.0.1",
     "typescript": "^5.0.4"
   }
