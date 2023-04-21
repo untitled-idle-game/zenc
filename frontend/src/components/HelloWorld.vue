@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p>(We promise it won't suck later)</p>
+    <p>The skeleton we set up was getting the file directory set up and various automation stuff</p>
+    <br><br><br>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
