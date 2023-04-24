@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install-all": "npm-run-all -s install:*",
+    "install:main": "npm install",
+    "install:functions": "cd functions && npm install",
+    "install:frontend": "cd frontend && npm install",
     "start": "npm run clean && npm-run-all -p serve:* watch:* sync",
     "clean": "rimraf -V -I ./public/ && mkdir public",
     "watch:backend": "tsc --project ./functions --watch",
