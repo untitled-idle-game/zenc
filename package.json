@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run clean && npm-run-all -p serve:* watch:* sync",
-    "clean": "rimraf -V -I ./public/*",
+    "clean": "rimraf -V -I ./public/ && mkdir public",
     "watch:backend": "tsc --project ./functions --watch",
     "serve:backend": "firebase serve",
     "watch:frontend": "cd frontend && npx vue-cli-service build --no-clean --dest ../public --watch",
