@@ -8,13 +8,14 @@
     "install:main": "npm install",
     "install:functions": "cd functions && npm install",
     "install:frontend": "cd frontend && npm install",
+
     "start": "npm run clean && npm-run-all -p serve:* watch:* sync",
     "clean": "rimraf -V -I ./public/ && mkdir public",
     "watch:backend": "tsc --project ./functions --watch",
     "serve:backend": "firebase serve",
     "watch:frontend": "cd frontend && npx vue-cli-service build --no-clean --dest ../public --watch",
     "serve:frontend": "cd frontend && npx vue-cli-service serve",
-    "sync": "npm run delay && browser-sync start --proxy 'localhost:5000' --files 'public/*'",
+    "sync": "npm run delay && browser-sync start --proxy localhost:5000 --files 'public/*'",
     "delay": "node ./node_modules/npm-delay 10000"
   },
   "repository": {
