@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import BackgroundMenu from './components/BackgroundMenu.vue';
 import ZenScreen from './components/ZenScreen.vue';
 
