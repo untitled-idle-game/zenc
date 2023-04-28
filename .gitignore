@@ -103,5 +103,5 @@ node_modules/
 # Node.js dependency directory
 ./functions/node_modules/
 
-# ignore public directory - is copied on build
+# ignore public directory - is created on build
 ./public/*
