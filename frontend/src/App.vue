@@ -1,16 +1,26 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-  <!-- <HelloWorld msg="Welcome to the to-be Zenc app! :)" /> -->
-  <!-- <BackgroundMenu/> -->
+  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+  <!-- <HelloWorld msg="Welcome to the to-be Zenc app! :)"/> -->
   <RouterLink to="/">Home</RouterLink>
   <RouterLink to="/login">Login</RouterLink>
-  <!-- <ZenScreen></ZenScreen> -->
+  <!-- <SignInScreen/> -->
+  <!-- <ZenScreen/> -->
   <RouterView />
+  <BackgroundMenu/>
 </template>
 
 <script>
+import BackgroundMenu from './components/BackgroundMenu.vue';
+import ZenScreen from './components/ZenScreen.vue';
+import SignInScreen from "./components/SignInScreen.vue";
+
 export default {
-  name: "App",
+  name: 'App',
+  components: {
+    BackgroundMenu,
+    ZenScreen,
+    SignInScreen
+}
 }
 </script>
 
