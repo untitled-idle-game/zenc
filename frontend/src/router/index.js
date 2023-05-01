@@ -17,9 +17,9 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             component: () => import(
-                '../components/HelloWorld.vue'
+                '../components/SignInScreen.vue'
             ),
-        }
+        },
     ]
 });
 
