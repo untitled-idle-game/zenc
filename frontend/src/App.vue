@@ -3,15 +3,26 @@
   <RouterLink to="/">Home</RouterLink>
   <RouterLink to="/login">Login</RouterLink>
   
-  <BackgroundMenu />
-  <RouterView />
+  <navbar v-position:top>
+    <BackgroundMenu />
+  </navbar>
+  <body v-position:bottom>
+    <RouterView />
+  </body>
 </template>
 
 <!-- If it is necessary to import things, do it in the script setup 
   so that you don't have to add all the module export stuff -->
 
-<script setup>
-import { BackgroundMenu } from "./components/BackgroundMenu.vue";
+<script>
+import BackgroundMenu from "./components/BackgroundMenu.vue";
+
+export default {
+  name: "App",
+  components: {
+    BackgroundMenu,
+  }
+}
 </script>
 
 <style>
@@ -22,5 +33,13 @@ import { BackgroundMenu } from "./components/BackgroundMenu.vue";
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+navbar {
+  margin-bottom: 50px;
+}
+
+body {
+  margin-top: 50px;
 }
 </style>
