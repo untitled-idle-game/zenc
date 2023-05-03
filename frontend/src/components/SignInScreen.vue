@@ -1,22 +1,46 @@
 <template>
+    <BackgroundMenu/>
     <div>
-        <ejs-button cssClass='e-primary'>Primary</ejs-button>
-        <ejs-button cssClass='e-success'>Success</ejs-button>
-        <ejs-button cssClass='e-info'>Info</ejs-button>
-        <ejs-button cssClass='e-warning'>Warning</ejs-button>
-        <ejs-button cssClass='e-danger'>Danger</ejs-button>
-        <ejs-button cssClass='e-link'>Link</ejs-button>
+        <img src="../assets/logo.png" id="zenLogo">
+        <button class="btn" id="btnSignIn" @click.left="onClick"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>
     </div>
 </template>
-    
+
 <script>
+import AuthManager from "./AuthManager.vue";
+import BackgroundMenu from "./BackgroundMenu.vue";
+
+console.log(AuthManager.user);
+
+export default {
+    name: "SignInScreen",
+    components: {
+        BackgroundMenu,
+    },
+    methods: {
+        onClick() {
+            AuthManager.methods.signIn();
+        }
+    }
+}
+
+
 </script>
     
-<style>
-    /* @import '../styles/ej2-base/material.css'; */
-    /* @import '../styles/ej2-vue-buttons/material.css'; */
-    
-    button {
-      margin: 25px 5px 20px 20px;
-    }
+<style scoped>    
+#zenLogo {
+    display: block;
+    margin: 25px auto 25px auto;
+}
+
+#roseIcon {
+    height: 1em;
+    margin: 2px 10px 2px 2px;
+}
+
+#btnSignIn {
+    background-color: navy;
+    color: white;
+}
+
 </style>

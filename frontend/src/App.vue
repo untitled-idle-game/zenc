@@ -14,15 +14,11 @@
 <!-- If it is necessary to import things, do it in the script setup 
   so that you don't have to add all the module export stuff -->
 
-<script>
+<script setup>
+import AuthManager from "./components/AuthManager.vue";
 import BackgroundMenu from "./components/BackgroundMenu.vue";
 
-export default {
-  name: "App",
-  components: {
-    BackgroundMenu,
-  }
-}
+AuthManager.setup();
 </script>
 
 <style>
