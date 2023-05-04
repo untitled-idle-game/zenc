@@ -45,6 +45,9 @@ function clickMenu() {
         <br>
         <br>
         <RouterLink to="/login" class = "linkClass">Login</RouterLink>
+        <br>
+        <br>
+        <RouterLink to="/themestore" class = "linkClass">Theme Store</RouterLink>
     </div>
       </div>
   <div class="menuicon">
@@ -74,14 +77,16 @@ function clickMenu() {
   #links {
     position: relative;
     top: 5%;
-    left: -75px;
-    align-items:start;
+    left: 10px;
+    text-align:left;
+    text-justify: left;
   }
   .linkClass {
     color: white;
     font-size: xx-large;
     text-decoration: none;
     text-align:left;
+    text-justify: left;
   }
 
 .material-symbols-outlined {

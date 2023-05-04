@@ -1,5 +1,5 @@
 <template>
-    <NavigationBar></NavigationBar>
+    <NavigationBar/>
     <div>
         <img src="../assets/logo.png" id="zenLogo">
         <button class="btn" id="btnSignIn" @click.left="onClick"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>

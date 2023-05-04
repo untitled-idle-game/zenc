@@ -31,6 +31,13 @@ const router = createRouter({
                 '../components/SignInScreen.vue'
             ),
         },
+        {
+            path: '/themestore',
+            name: 'themestore',
+            component: () => import(
+                '../components/ThemeStoreScreen.vue'
+            ),
+        },
     ]
 });
 
