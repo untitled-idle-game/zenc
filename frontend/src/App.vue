@@ -2,7 +2,7 @@
   <!-- Add your RouterLinks here (until we get a functioning menu, that is) -->
   
   <navbar v-position:top>
-    <BackgroundMenu />
+    <NavigationBar />
   </navbar>
   <body v-position:bottom>
     <RouterView />
@@ -14,7 +14,7 @@
 
 <script setup>
 import AuthManager from "./components/AuthManager.vue";
-import BackgroundMenu from "./components/BackgroundMenu.vue";
+import NavigationBar from "./components/NavigationBar.vue";
 
 AuthManager.setup();
 </script>
