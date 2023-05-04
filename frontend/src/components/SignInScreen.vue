@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         onClick() {
-            AuthManager.methods.signIn();
+            AuthManager.signIn();
         }
     }
 }

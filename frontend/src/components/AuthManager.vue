@@ -1,4 +1,14 @@
 <script>
+function redirect(isSignedIn) {
+    const onLoginPage = !!document.querySelector("#loginPage");
+    if (onLoginPage && isSignedIn) {
+        location.href = "/"
+    }
+    if (onLoginPage && !isSignedIn) {
+        location.href = "/login"
+    }
+}
+
 /* eslint-disable */
 export default {
 name: "AuthManager",
@@ -7,10 +17,12 @@ data: {
     name: () => this._user.displayName,
     avatar: () => this._user.photoURL
 },
-props: ["_user","_name"],
+props: ["_user","_name", ],
 setup() {
     firebase.auth().onAuthStateChanged((user) => {
 		this._user = user;
+        console.log(this._user);
+        redirect(!!this._user);
 	});
 },
 methods: {
