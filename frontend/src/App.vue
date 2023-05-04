@@ -1,9 +1,6 @@
 <template>
   <!-- Add your RouterLinks here (until we get a functioning menu, that is) -->
-  <RouterLink to="/">Home</RouterLink>
-  <RouterLink to="/login">Login</RouterLink>
   
-  <BackgroundMenu />
   <RouterView />
 </template>
 
@@ -11,7 +8,6 @@
   so that you don't have to add all the module export stuff -->
 
 <script setup>
-import { BackgroundMenu } from "./components/BackgroundMenu.vue";
 </script>
 
 <style>

@@ -1,6 +1,7 @@
 <!-- TODO: Elijah --->
 <script>
   import ZenCircle from './ZenCircle.vue';
+  import NavigationBar from './NavigationBar.vue';
 
   export default {
     name: "ZenScreen",
@@ -11,11 +12,13 @@
     },
     components: {
       ZenCircle,
+      NavigationBar,
     }
   }
 </script>
 
 <template>
+  <NavigationBar></NavigationBar>
   <!-- Put navBar here when it is implemented -->
   <div class="pointCount">
     <p id="count">{{ count }}</p>
