@@ -12,8 +12,24 @@
     },
     components: {
       ZenCircle,
-      NavigationBar,
+
+    NavigationBar,
+    }, 
+    methods: {
+      incrementCount(cycles) {
+        if (cycles % 4 != 0) {
+          console.error("Cycle count must be a multiple of 4");
+          return;
+        } else {
+          setInterval(() => {
+            this.count++;
+          }, 15000);
+        }
+      }
     }
+  }
+  window.onload = () => {
+    this.incrementCount(4);
   }
 </script>
 
