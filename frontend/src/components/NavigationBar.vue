@@ -1,6 +1,7 @@
 <!-- TODO: Eric -->
 <!-- Eric, replace script stuff with what you need, its just there so the compiler is happy. ~Elijah -->
 <script setup>
+import AuthManager from './AuthManager.vue';
 let menuPosition = 0;
 let open = false;
 const menuSize = 100;
@@ -33,6 +34,9 @@ function clickMenu() {
       closeMenu();
     }
 }
+function signOut() {
+  AuthManager.methods.signOut();
+}
 </script>
 
 <template>
@@ -44,10 +48,13 @@ function clickMenu() {
         <RouterLink to="/" class = "linkClass">Home</RouterLink>
         <br>
         <br>
-        <RouterLink to="/login" class = "linkClass">Login</RouterLink>
+        <RouterLink to="/login" class = "linkClass">Login Page</RouterLink>
         <br>
         <br>
         <RouterLink to="/themestore" class = "linkClass">Theme Store</RouterLink>
+        <br>
+        <br>
+        <button @click = "signOut" class = "linkClass">Sign Out</button>
     </div>
       </div>
   <div class="menuicon">
@@ -64,6 +71,7 @@ function clickMenu() {
     width: 100%;
     height: 35px;
     background-color: navy;
+    z-index: 10;
   }
   #menu {
     position: absolute;
@@ -73,6 +81,7 @@ function clickMenu() {
     height: 100%;
     background-color: navy;
     border-radius: 0 0 30px 0;
+    z-index: 10;
   }
   #links {
     position: relative;
@@ -80,6 +89,7 @@ function clickMenu() {
     left: 10px;
     text-align:left;
     text-justify: left;
+    z-index: 10;
   }
   .linkClass {
     color: white;
@@ -87,6 +97,11 @@ function clickMenu() {
     text-decoration: none;
     text-align:left;
     text-justify: left;
+    z-index: 10;
+    cursor:pointer;
+    background-color: transparent;
+    border-width: 0px;
+    padding: 0px 0px 0px 0px
   }
 
 .material-symbols-outlined {
@@ -111,5 +126,6 @@ function clickMenu() {
     height: 35px;
     color: white;
     margin: 0px 0px 0px 0px;
+    z-index: 10;
   }
 </style>
