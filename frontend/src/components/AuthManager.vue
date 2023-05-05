@@ -1,10 +1,14 @@
+<template>
+    <p></p>
+</template>
 <script>
 function redirect(isSignedIn) {
     const onLoginPage = !!document.querySelector("#loginPage");
+
     if (onLoginPage && isSignedIn) {
         location.href = "/"
     }
-    if (onLoginPage && !isSignedIn) {
+    if (!onLoginPage && !isSignedIn) {
         location.href = "/login"
     }
 }
@@ -12,17 +16,15 @@ function redirect(isSignedIn) {
 /* eslint-disable */
 export default {
 name: "AuthManager",
-data: {
-    user: () => this._user,
-    name: () => this._user.displayName,
-    avatar: () => this._user.photoURL
-},
-props: ["_user","_name", ],
-setup() {
+data: () => { return {
+    user: () => undefined,
+    name: () => this.user.displayName,
+    avatar: () => this.user.photoURL
+}},
+created() {
     firebase.auth().onAuthStateChanged((user) => {
-		this._user = user;
-        console.log(this._user);
-        redirect(!!this._user);
+		this.user = user;
+        redirect(!!this.user);
 	});
 },
 methods: {
@@ -52,7 +54,6 @@ methods: {
 			alert('Sign out error:', errorCode, errorMessage);
 		});
     }
-    
 }    
 };
 </script>

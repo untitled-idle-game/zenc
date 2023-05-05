@@ -1,10 +1,9 @@
 <template>
   <!-- Add your RouterLinks here (until we get a functioning menu, that is) -->
-  
-  <navbar v-position:top>
-  </navbar>
-  <body v-position:bottom>
-    <RouterView />
+  <AuthManager ref="authManager"/>
+  <NavigationBar/>
+  <body>
+    <RouterView/>
   </body>
 </template>
 
@@ -12,12 +11,22 @@
   so that you don't have to add all the module export stuff -->
 
 <script setup>
-import AuthManager from "./components/AuthManager.vue";
-
-AuthManager.setup();
-// RedirectManager.setup();
+// Note: I moved everything downwards, as there were some technical
+// difficulties with putting everything in setup - Sam
 </script>
-
+<script>
+import AuthManager from "./components/AuthManager.vue";
+import NavigationBar from "./components/NavigationBar.vue";
+export default {
+  components: {
+    AuthManager,
+    NavigationBar,
+  },
+  mounted() {
+    console.log(this.$refs.authManager);
+  }
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

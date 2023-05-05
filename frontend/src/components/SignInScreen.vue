@@ -1,25 +1,18 @@
 <template>
-    <NavigationBar/>
-    <div>
+    <div id="loginPage" class="text-center">
         <img src="../assets/logo.png" id="zenLogo">
         <button class="btn" id="btnSignIn" @click.left="onClick"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>
     </div>
 </template>
 
 <script>
-import AuthManager from "./AuthManager.vue";
-import NavigationBar from './NavigationBar.vue';
-
-console.log(AuthManager.user);
+let authManager = this.$ref.authManager;
 
 export default {
     name: "SignInScreen",
-    components: {
-      NavigationBar,
-    },
     methods: {
         onClick() {
-            AuthManager.signIn();
+            authManager.signIn();
         }
     }
 }
