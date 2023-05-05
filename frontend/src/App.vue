@@ -15,6 +15,7 @@
 import AuthManager from "./components/AuthManager.vue";
 
 AuthManager.setup();
+// RedirectManager.setup();
 </script>
 
 <style>
