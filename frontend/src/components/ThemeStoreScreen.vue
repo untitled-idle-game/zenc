@@ -1,6 +1,26 @@
 <!-- TODO: Eric: We need a database or atleast a JSON template I can use, since the themes are user uploaded I can't simply hard code theme screens. --->
 <script>
 import NavigationBar from './NavigationBar.vue';
+let themes = [
+      {
+        "name": "Dark Mode",
+        "imageURL": "https://www.shutterstock.com/image-photo/mountains-under-mist-morning-amazing-260nw-1725825019.jpg",
+        "creator": "Eric",
+        "fgColor": "#FFFFFF",
+        "accentColor": "#000000",
+        "lastTouched": "2012-04-23T18:25:43.511Z",
+        "price": 2
+      },
+      {
+        "name": "Ow my eyes",
+        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+        "creator": "Eric",
+        "fgColor": "#FF0000",
+        "accentColor": "#00FF00",
+        "lastTouched": "2012-05-23T18:25:43.511Z",
+        "price": 1
+      }
+    ];
 export default {
     name: "ThemeStoreScreen",
     data() {
@@ -13,28 +33,6 @@ export default {
     },
     methods: {
       loadPage() {
-      let themes = [
-      {
-        "id": 0,
-        "name": "Dark Mode",
-        "imageURL": "https://www.shutterstock.com/image-photo/mountains-under-mist-morning-amazing-260nw-1725825019.jpg",
-        "creator": "Eric",
-        "fgColor": "#FFFFFF",
-        "accentColor": "#000000",
-        "dateAdded": "2012-04-23T18:25:43.511Z",
-        "price": 2
-      },
-      {
-        "id": 1,
-        "name": "Ow my eyes",
-        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
-        "creator": "Eric",
-        "fgColor": "#FF0000",
-        "accentColor": "#00FF00",
-        "dateAdded": "2012-05-23T18:25:43.511Z",
-        "price": 1
-      }
-    ]
       document.getElementById("themeBoxes").innerHTML="";
       for (let i = 0; i < themes.length; i++) {
         let theme = themes[i];
@@ -57,7 +55,20 @@ export default {
         </div>`;
         document.getElementById("themeBoxes").innerHTML+=themeString;
       }
-    }
+    },
+    add() {
+      let id = themes.length + 1;
+      themes.push({
+        "name": "Ow my eyes "+ id,
+        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+        "creator": "Eric",
+        "fgColor": "#FF0000",
+        "accentColor": "#00FF00",
+        "lastTouched": "2012-05-23T18:25:43.511Z",
+        "price": 1
+      })
+      this.loadPage();
+    },
     },
     components: {
         NavigationBar,
@@ -65,14 +76,16 @@ export default {
 }
 </script>
 <script setup>
-    
-    
+import ThemeStoreScreen from './ThemeStoreScreen.vue';
+    function add() {
+      ThemeStoreScreen.methods.add();
+    }
 </script>
 <template>
-  <AuthManager/>
   <NavigationBar/>
       <div id = "themeBoxes">
       </div>
+      <button class = "btn bmd-btn-fab" @click = "add" id = "addButton">+</button>
 </template>
 
 <style scoped>
@@ -105,5 +118,13 @@ export default {
   #themeBoxes {
     overflow-x: hidden;
     overflow-y: auto;
+  }
+  #addButton {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    background: navy;
+    z-index: 999;
+    color:white;
   }
 </style>

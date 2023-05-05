@@ -48,9 +48,6 @@ function signOut() {
         <RouterLink to="/" class = "linkClass">Home</RouterLink>
         <br>
         <br>
-        <RouterLink to="/login" class = "linkClass">Login Page</RouterLink>
-        <br>
-        <br>
         <RouterLink to="/themestore" class = "linkClass">Theme Store</RouterLink>
         <br>
         <br>
@@ -65,7 +62,7 @@ function signOut() {
 
 <style scoped>
   .menubackground {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -74,7 +71,7 @@ function signOut() {
     z-index: 10;
   }
   #menu {
-    position: absolute;
+    position: fixed;
     top: -100%;
     left: 0px;
     width: 300px;
@@ -119,7 +116,7 @@ function signOut() {
     font-size: x-large;
     justify-content: left;
     text-align: left;
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 20px;
     width: 40px;
