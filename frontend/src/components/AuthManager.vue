@@ -2,17 +2,6 @@
     <p></p>
 </template>
 <script>
-function redirect(isSignedIn) {
-    const onLoginPage = !!document.querySelector("#loginPage");
-
-    if (onLoginPage && isSignedIn) {
-        location.href = "/"
-    }
-    if (!onLoginPage && !isSignedIn) {
-        location.href = "/login"
-    }
-}
-
 /* eslint-disable */
 export default {
 name: "AuthManager",
@@ -23,8 +12,15 @@ data: () => { return {
 }},
 created() {
     firebase.auth().onAuthStateChanged((user) => {
+        const isSignedIn = !!user;
 		this.user = user;
-        redirect(!!this.user);
+        const onLoginPage = !!document.querySelector("#loginPage");
+        if (!onLoginPage && !isSignedIn) {
+            location.href = "/login";
+        }
+        if (onLoginPage && isSignedIn) {
+            location.href = "/";
+        }
 	});
 },
 methods: {
@@ -54,6 +50,5 @@ methods: {
 			alert('Sign out error:', errorCode, errorMessage);
 		});
     }
-}    
-};
+}};
 </script>

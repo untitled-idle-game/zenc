@@ -1,5 +1,6 @@
 <!-- TODO: Elijah --->
 <script >
+  import AuthManager from './AuthManager.vue';
   import ZenCircle from './ZenCircle.vue';
   import NavigationBar from './NavigationBar.vue';
 
@@ -11,6 +12,7 @@
       }
     },
     components: {
+      AuthManager,
       ZenCircle,
       NavigationBar,
     }, 
@@ -25,16 +27,17 @@
           }, 15000);
         }
       }
+    },
+    mounted() {
+      this.incrementCount(4);
     }
-  }
-  window.onload = () => {
-    this.incrementCount(4);
   }
 </script>
 
 <template>
   <!-- Put navBar here when it is implemented -->
   <NavigationBar/>
+  <AuthManager/>
   <div class="pointCount">
     <p id="count">{{ count }}</p>
     <p>Zen Points</p>

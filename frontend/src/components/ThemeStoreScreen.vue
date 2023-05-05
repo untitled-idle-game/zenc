@@ -69,6 +69,7 @@ export default {
     
 </script>
 <template>
+  <AuthManager/>
   <NavigationBar/>
       <div id = "themeBoxes">
       </div>

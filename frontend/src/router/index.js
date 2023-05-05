@@ -30,6 +30,7 @@ const router = createRouter({
             component: () => import(
                 '../components/SignInScreen.vue'
             ),
+            props: true
         },
         {
             path: '/themestore',
@@ -37,6 +38,7 @@ const router = createRouter({
             component: () => import(
                 '../components/ThemeStoreScreen.vue'
             ),
+            
         },
     ]
 });
