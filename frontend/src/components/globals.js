@@ -6,7 +6,7 @@ globals.FB_USER_COLLECTION = "Users";
 globals.FB_THEME_COLLECTION = "Themes";
 
 globals.FB_KEY_USER_UID = "uid";
-globals.FB_KEY_USER_NAME = "name";
+globals.FB_KEY_USER_NAME = "displayName";
 globals.FB_KEY_USER_AVATAR = "avatar";
 globals.FB_KEY_USER_ZENPOINTS = "zenpoints";
 globals.FB_KEY_USER_OWNED_THEMES = "ownedThemes";
@@ -103,7 +103,7 @@ globals.authManager = new _AuthManager();
  */
 const _UserManager = class {
     constructor() {
-        this._ref = firebase.firestore().collections(globals.FB_USER_COLLECTION); 
+        this._ref = firebase.firestore().collection(globals.FB_USER_COLLECTION); 
         this._doc = null;
 		this._unsubscribe = null;
     }
@@ -184,15 +184,15 @@ const _UserManager = class {
      * nor does it automatically equip it.
      * 
      * @param {uid} uid the user ID buying the theme
-     * @param {Theme} themeID the ID of the theme to check
+     * @param {Theme} theme the theme to check
      * @returns the promise of the server being updated
      */
-    buyTheme(uid, themeID) {
+    buyTheme(uid, theme) {
         const userRef = this._ref.doc(uid);
         let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
         zenpoints -= theme.price;
         const userThemes = userRef.get(globals.FB_KEY_USER_OWNED_THEMES);
-        userThemes.push(themeID);
+        userThemes.push(theme.id);
         return userRef.update({
             [globals.FB_KEY_USER_OWNED_THEMES]: userThemes,
             [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
@@ -203,20 +203,34 @@ const _UserManager = class {
      * Equips a theme for the user. This does not check if the user owns the theme.
      * 
      * @param {uid} uid the user ID equipping the theme
-     * @param {Theme} themeID the theme to equip
+     * @param {Theme} theme the theme to equip
      * @returns the promise of the server being updated
      */
-    equipTheme(uid, themeID) {
+    equipTheme(uid, theme) {
         const userRef = this._ref.doc(uid);
         return userRef.update({
-            [globals.FB_KEY_USER_SELECTED_THEME]: theme
+            [globals.FB_KEY_USER_SELECTED_THEME]: theme.id
+        });
+    }
+
+    /**
+     * Gives the user with the given UID a certain amount of zenpoints.
+     * @param {string} uid the user to give zenpoints to
+     * @param {number} amount the amount of zenpoints to give
+     */
+    grantZenpoints(uid, amount) {
+        const userRef = this._ref.doc(uid);
+        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
+        zenpoints += amount;
+        return userRef.update({
+            [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
         });
     }
 }
 
 globals.userManager = new _UserManager();
 globals.authManager.beginListening(() =>
-    globals.userManager.addNewUserMaybe(globals.authManager.uid)
+    globals.userManager.addNewUserMaybe(globals.authManager.uid, globals.authManager.displayName, globals.authManager.avatarUrl)
 );
 
 globals.Theme = class {
@@ -362,20 +376,35 @@ globals.themeManager = new _ThemeManager();
 const _StorageManager = class {
     /**
      * Uploads a theme image onto the server, received via an input of type "file".
-     * Note: a file can be retrieved via the following code:
      * @example
      * ```
      *  document.querySelector("#inputFile").addEventListener("change", (event) => {
-     *      globals.storageRef.uploadThemeImage(<themeID>, event.target.files[0]);
+     *      globals.storageRef.uploadThemeImage(<theme index>, event.target.files[0]);
      *  }
      * ```
      * @param {string} themeID the theme ID for the file to upload
      * @param {File} file the file to upload onto the server
      */
-    uploadThemeImage(themeID, file) {
-        const storageRef = firebase.storage().ref().child(`backgroundImages/${themeID}`); // Create new child in Firebase storage
+    uploadThemeImage(themeIndex, file) {
+        const theme = globals.themeManager.getThemeAtIndex(themeIndex);
+        const storageRef = firebase.storage().ref().child(`backgroundImages/${theme.id}`); // Create new child in Firebase storage
         storageRef.put(file)
+        .then(((theme) => {
+            storageRef.getDownloadURL()
+            .then((downloadUrl) => {
+                theme.update(
+                    theme.id,
+                    theme.name,
+                    downloadUrl,
+                    theme.fgColor,
+                    theme.accentColor,
+                    theme.price
+                )
+            })
+        }).bind(theme));
     }
+
+
 }
 
 globals.storageManager = new _StorageManager();
