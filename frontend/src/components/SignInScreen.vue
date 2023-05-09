@@ -1,5 +1,4 @@
 <template>
-    <AuthManager/>
     <NavigationBar/>
     <div id="loginPage" class="text-center">
         <img src="../assets/logo.png" id="zenLogo">
@@ -8,19 +7,17 @@
 </template>
 
 <script>
-import AuthManager from './AuthManager.vue';
+import globals from "./globals";
 import NavigationBar from './NavigationBar.vue';
 
 export default {
     name: "SignInScreen",
-    props: ["authManager"],
     components: {
         NavigationBar,
-        AuthManager
     },
     methods: {
         testMethod() {
-            AuthManager.methods.signIn();
+            globals.authManager.signIn();
         }
     }
 }

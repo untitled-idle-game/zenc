@@ -1,6 +1,6 @@
 <!-- TODO: Elijah --->
-<script >
-  import AuthManager from './AuthManager.vue';
+<script>
+  // eslint-disable-next-line
   import ZenCircle from './ZenCircle.vue';
   import NavigationBar from './NavigationBar.vue';
 
@@ -12,7 +12,6 @@
       }
     },
     components: {
-      AuthManager,
       ZenCircle,
       NavigationBar,
     }, 
@@ -37,7 +36,6 @@
 <template>
   <!-- Put navBar here when it is implemented -->
   <NavigationBar/>
-  <AuthManager/>
   <div class="pointCount">
     <p id="count">{{ count }}</p>
     <p>Zen Points</p>

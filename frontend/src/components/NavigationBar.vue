@@ -1,7 +1,8 @@
 <!-- TODO: Eric -->
 <!-- Eric, replace script stuff with what you need, its just there so the compiler is happy. ~Elijah -->
 <script setup>
-import AuthManager from './AuthManager.vue';
+import globals from "./globals";
+
 let menuPosition = 0;
 let open = false;
 const menuSize = 100;
@@ -35,7 +36,8 @@ function clickMenu() {
     }
 }
 function signOut() {
-  AuthManager.methods.signOut();
+  /* eslint-disable */
+  globals.authManager.signOut();
 }
 </script>
 
