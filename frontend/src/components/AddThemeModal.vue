@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" id="addThemeDialog" tabindex="-1" role="dialog">
+  <div class="modal fade" :id="id" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 
@@ -11,17 +11,22 @@
         <!-- Form for add modal -->
         <div class="form-group">
           <label for="inputName">Name</label> <!-- for is an accessibility thing -->
-          <input type="text" class="form-control" id="inputName" placeholder="">
+          <input type="text" class="form-control" placeholder="Theme Name" id="inputName" v-model="inputName"/>
+        </div>
+        <div class="form-group">
+          <label for="inputName">Background</label> <!-- for is an accessibility thing -->
+          <input type="file" class="form-control" placeholder="Theme Name" id="inputBackground" v-on:change="inputBackgroundFileChanged"/>
         </div>
         <div class="form-group">
           <label for="inputFgColor">Foreground Color</label>
-          <input type="text" class="form-control" id="inputFgColor" placeholder="">
+          <input type="text" class="form-control" id="inputFgColor" placeholder="" v-model="inputFgColor"/>
+          <span class="bmd-help">This is an </span>
+          <label for="inputAccentColor">Accent Color</label>
+          <input type="text" class="form-control" id="inputAccentColor" placeholder="" v-model="inputAccentColor">
           <span class="bmd-help"></span>
         </div>
         <div class="form-group">
-          <label for="inputAccentColor">Foreground Color</label>
-          <input type="text" class="form-control" id="inputAccentColor" placeholder="">
-          <span class="bmd-help"></span>
+          
         </div>
       </div>
 
@@ -39,10 +44,30 @@
 import globals from './globals.js';
 export default {
     name: "AddThemeModal",
+    props: ["id"],
+    data() {
+        return {
+            inputName: "Untitled Theme",
+            inputBackground: null,
+            inputFgColor: "",
+            inputAccentColor: "",
+        }
+    },
     methods: {
+        inputBackgroundFileChanged(event) {
+            console.log(event);
+        },
         addTheme() {
             console.log("TODO: add theme");
+            globals.themeManager.add(
+                this.inputName,
+                this.inputFgColor,
+                this.inputAccentColor,
+            )
         }
+    },
+    mounted() {
+        
     }
 };
 </script>

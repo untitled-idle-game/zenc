@@ -1,6 +1,8 @@
 <!-- TODO: Eric: We need a database or atleast a JSON template I can use, since the themes are user uploaded I can't simply hard code theme screens. --->
 <script>
 import NavigationBar from './NavigationBar.vue';
+import AddThemeModal from './AddThemeModal.vue';
+
 let themes = [
       {
         "name": "Dark Mode",
@@ -56,36 +58,31 @@ export default {
         document.getElementById("themeBoxes").innerHTML+=themeString;
       }
     },
-    add() {
-      let id = themes.length + 1;
-      themes.push({
-        "name": "Ow my eyes "+ id,
-        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
-        "creator": "Eric",
-        "fgColor": "#FF0000",
-        "accentColor": "#00FF00",
-        "lastTouched": "2012-05-23T18:25:43.511Z",
-        "price": 1
-      })
-      this.loadPage();
-    },
+    // add() {
+    //   let id = themes.length + 1;
+    //   themes.push({
+    //     "name": "Ow my eyes "+ id,
+    //     "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+    //     "creator": "Eric",
+    //     "fgColor": "#FF0000",
+    //     "accentColor": "#00FF00",
+    //     "lastTouched": "2012-05-23T18:25:43.511Z",
+    //     "price": 1
+    //   })
+    //   this.loadPage();
+    // },
     },
     components: {
-        NavigationBar,
-    }
+    NavigationBar,
+    AddThemeModal
 }
-</script>
-<script setup>
-import ThemeStoreScreen from './ThemeStoreScreen.vue';
-    function add() {
-      ThemeStoreScreen.methods.add();
-    }
+}
 </script>
 <template>
   <NavigationBar/>
-      <div id = "themeBoxes">
-      </div>
-      <button class = "btn bmd-btn-fab" @click = "add" id = "addButton">+</button>
+  <AddThemeModal id="addTheme"/>
+  <div id = "themeBoxes"></div>
+  <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addTheme">+</button>
 </template>
 
 <style scoped>
