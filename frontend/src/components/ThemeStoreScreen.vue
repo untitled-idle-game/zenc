@@ -32,7 +32,7 @@ export default {
       }
     },
     mounted() {
-      this.loadPage();
+      globals.themeManager.beginListening(this.loadPage);
     },
     methods: {
       loadPage() {

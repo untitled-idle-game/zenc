@@ -264,6 +264,7 @@ const _ThemeManager = class {
 		this._documentSnapshots = [];
 		this._ref = firebase.firestore().collection(globals.FB_THEME_COLLECTION);
 		this._unsubscribe = null;
+        this.beginListening();
 		// this.uid = uid; -- maybe add this later
 	}
 
@@ -351,12 +352,13 @@ const _ThemeManager = class {
 		if (!docSnapshot) {
 			return null;
 		}
+        console.log(docSnapshot);
 		const theme = new globals.Theme(docSnapshot.id, {
             name: docSnapshot.get(globals.FB_KEY_THEME_NAME),
             imageUrl: docSnapshot.get(globals.FB_KEY_THEME_IMAGE_URL),
             creator: docSnapshot.get(globals.FB_KEY_THEME_CREATOR),
             fgColor: docSnapshot.get(globals.FB_KEY_THEME_FGCOLOR),
-            accentColor: docSnapshot.get(globals.FB_KEY_THEME_ACCENT_COLORCOLOR),
+            accentColor: docSnapshot.get(globals.FB_KEY_THEME_ACCENT_COLOR),
             lastTouched: docSnapshot.get(globals.FB_KEY_THEME_LAST_TOUCHED),
             price: docSnapshot.get(globals.FB_KEY_THEME_PRICE),
         });
