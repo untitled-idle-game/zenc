@@ -79,6 +79,8 @@ export default {
 }
 }
 </script>
+<script setup>
+</script>
 <template>
   <NavigationBar/>
   <AddThemeModal id="addTheme"/>
