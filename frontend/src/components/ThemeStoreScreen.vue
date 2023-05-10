@@ -1,26 +1,7 @@
 <!-- TODO: Eric: We need a database or atleast a JSON template I can use, since the themes are user uploaded I can't simply hard code theme screens. --->
 <script>
 import NavigationBar from './NavigationBar.vue';
-let themes = [
-      {
-        "name": "Dark Mode",
-        "imageURL": "https://www.shutterstock.com/image-photo/mountains-under-mist-morning-amazing-260nw-1725825019.jpg",
-        "creator": "Eric",
-        "fgColor": "#FFFFFF",
-        "accentColor": "#000000",
-        "lastTouched": "2012-04-23T18:25:43.511Z",
-        "price": 2
-      },
-      {
-        "name": "Ow my eyes",
-        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
-        "creator": "Eric",
-        "fgColor": "#FF0000",
-        "accentColor": "#00FF00",
-        "lastTouched": "2012-05-23T18:25:43.511Z",
-        "price": 1
-      }
-    ];
+import globals from './globals.js';
 export default {
     name: "ThemeStoreScreen",
     data() {
@@ -34,8 +15,8 @@ export default {
     methods: {
       loadPage() {
       document.getElementById("themeBoxes").innerHTML="";
-      for (let i = 0; i < themes.length; i++) {
-        let theme = themes[i];
+      for (let i = 0; i < globals.themeManager.length; i++) {
+        let theme = globals.themeManager.getThemeAtIndex(i);
         let themeString = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${theme.imageURL}); top:${100+400*i}px">
             <p data-v-8f2b0d58 class = "name" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
 				  1px 1px 2px ${theme.accentColor},
@@ -57,18 +38,8 @@ export default {
       }
     },
     add() {
-      let id = themes.length + 1;
-      themes.push({
-        "name": "Ow my eyes "+ id,
-        "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
-        "creator": "Eric",
-        "fgColor": "#FF0000",
-        "accentColor": "#00FF00",
-        "lastTouched": "2012-05-23T18:25:43.511Z",
-        "price": 1
-      })
-      this.loadPage();
-    },
+      
+    }
     },
     components: {
         NavigationBar,
