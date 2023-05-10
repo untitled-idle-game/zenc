@@ -1,7 +1,29 @@
 <!-- TODO: Eric: We need a database or atleast a JSON template I can use, since the themes are user uploaded I can't simply hard code theme screens. --->
 <script>
 import NavigationBar from './NavigationBar.vue';
+import AddThemeModal from './AddThemeModal.vue';
+
 import globals from './globals.js';
+// let themes = [
+//       {
+//         "name": "Dark Mode",
+//         "imageURL": "https://www.shutterstock.com/image-photo/mountains-under-mist-morning-amazing-260nw-1725825019.jpg",
+//         "creator": "Eric",
+//         "fgColor": "#FFFFFF",
+//         "accentColor": "#000000",
+//         "lastTouched": "2012-04-23T18:25:43.511Z",
+//         "price": 2
+//       },
+//       {
+//         "name": "Ow my eyes",
+//         "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+//         "creator": "Eric",
+//         "fgColor": "#FF0000",
+//         "accentColor": "#00FF00",
+//         "lastTouched": "2012-05-23T18:25:43.511Z",
+//         "price": 1
+//       }
+//     ];
 export default {
     name: "ThemeStoreScreen",
     data() {
@@ -37,26 +59,31 @@ export default {
         document.getElementById("themeBoxes").innerHTML+=themeString;
       }
     },
-    add() {
-      
-    }
+    // add() {
+    //   let id = themes.length + 1;
+    //   themes.push({
+    //     "name": "Ow my eyes "+ id,
+    //     "imageURL": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+    //     "creator": "Eric",
+    //     "fgColor": "#FF0000",
+    //     "accentColor": "#00FF00",
+    //     "lastTouched": "2012-05-23T18:25:43.511Z",
+    //     "price": 1
+    //   })
+    //   this.loadPage();
+    // },
     },
     components: {
-        NavigationBar,
-    }
+    NavigationBar,
+    AddThemeModal
 }
-</script>
-<script setup>
-import ThemeStoreScreen from './ThemeStoreScreen.vue';
-    function add() {
-      ThemeStoreScreen.methods.add();
-    }
+}
 </script>
 <template>
   <NavigationBar/>
-      <div id = "themeBoxes">
-      </div>
-      <button class = "btn bmd-btn-fab" @click = "add" id = "addButton">+</button>
+  <AddThemeModal id="addTheme"/>
+  <div id = "themeBoxes"></div>
+  <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addTheme">+</button>
 </template>
 
 <style scoped>
