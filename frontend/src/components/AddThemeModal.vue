@@ -4,29 +4,40 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add quote</h5>
+        <h5 class="modal-title" :id="id+'inputTitle'">Add Theme</h5>
       </div>
 
       <div class="modal-body">
         <!-- Form for add modal -->
-        <div class="form-group">
-          <label for="inputName">Name</label> <!-- for is an accessibility thing -->
-          <input type="text" class="form-control" placeholder="Theme Name" id="inputName" v-model="inputName"/>
+        <div class="container-fluid">
+            <div class="form-group row">
+                <label for="inputName">Name</label> <!-- for is an accessibility thing -->
+                <input type="text" class="form-control" placeholder="Theme Name" :id="id+'inputName'" v-model="inputName"/>
+            </div>
+            <div class="form-group row">
+                <label for="inputName">Background</label> <!-- for is an accessibility thing -->
+                <input type="file" class="form-control" placeholder="Theme Name" :id="id+'inputBackground'" v-on:change="inputBackgroundFileChanged"/>
+            </div>
+            <div class="form-group row">
+                <div class="col-12 col-md-6">
+                    <label for="inputFgColor">Foreground Color</label>
+                    <input type="text" class="form-control" :id="id+'inputFgColor'" placeholder="" v-model="inputFgColor"/>
+                    <span class="bmd-help">Test</span>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label for="inputAccentColor">Accent Color</label>
+                    <input type="text" class="form-control" :id="id+'inputAccentColor'" placeholder="" v-model="inputAccentColor">
+                    <span class="bmd-help"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPrice">Price</label>
+                <input type="text" class="form-control" :id="id+'inputPrice'" placeholder="" v-model.number="inputPrice">
+                <span class="bmd-help">"Try to keep this inexpensive so others will be able to use it :)"</span>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="inputName">Background</label> <!-- for is an accessibility thing -->
-          <input type="file" class="form-control" placeholder="Theme Name" id="inputBackground" v-on:change="inputBackgroundFileChanged"/>
-        </div>
-        <div class="form-group">
-          <label for="inputFgColor">Foreground Color</label>
-          <input type="text" class="form-control" id="inputFgColor" placeholder="" v-model="inputFgColor"/>
-          <span class="bmd-help">This is an </span>
-          <label for="inputAccentColor">Accent Color</label>
-          <input type="text" class="form-control" id="inputAccentColor" placeholder="" v-model="inputAccentColor">
-          <span class="bmd-help"></span>
-        </div>
-        <div class="form-group">
-          
+        <div v-if="errorText">
+            <span class="errorText" v-text="errorText"></span><br/>
         </div>
       </div>
 
@@ -47,10 +58,12 @@ export default {
     props: ["id"],
     data() {
         return {
+            errorText:"",
             inputName: "Untitled Theme",
             inputBackground: null,
             inputFgColor: "",
             inputAccentColor: "",
+            inputPrice: 0
         }
     },
     methods: {
@@ -61,9 +74,11 @@ export default {
             console.log("TODO: add theme");
             globals.themeManager.add(
                 this.inputName,
+                "backgroundImages/a.jpg",
                 this.inputFgColor,
                 this.inputAccentColor,
-            )
+                this.inputPrice
+            );
         }
     },
     mounted() {
@@ -71,3 +86,8 @@ export default {
     }
 };
 </script>
+<style>
+.errorText {
+    color: red;
+}
+</style>
