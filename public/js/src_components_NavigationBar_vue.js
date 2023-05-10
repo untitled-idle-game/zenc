@@ -8,17 +8,6 @@
  */
 (self["webpackChunkfrontend"] = self["webpackChunkfrontend"] || []).push([["src_components_NavigationBar_vue"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=script&lang=js":
-/*!*********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=script&lang=js ***!
-  \*********************************************************************************************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* eslint-disable */\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: \"AuthManager\",\n  data: () => {\n    return {\n      user: () => undefined,\n      name: () => undefined.user.displayName,\n      avatar: () => undefined.user.photoURL\n    };\n  },\n  created() {\n    firebase.auth().onAuthStateChanged(user => {\n      const isSignedIn = !!user;\n      this.user = user;\n      const onLoginPage = !!document.querySelector(\"#loginPage\");\n      if (!onLoginPage && !isSignedIn) {\n        location.href = \"/login\";\n      }\n      if (onLoginPage && isSignedIn) {\n        location.href = \"/\";\n      }\n    });\n  },\n  methods: {\n    beginListening(changeListener) {\n      firebase.auth().onAuthStateChanged(user => {\n        changeListener(user);\n      });\n    },\n    signIn() {\n      console.log(\"Sign in\");\n      // Auth key was generated via Rosefire and Firebase\n      // We should probably store this somewhere else...\n      Rosefire.signIn(\"91ca8bd9-3a3d-4bb6-b296-80ba167fff5b\", (err, rfUser) => {\n        if (err) {\n          alert(`Rosefire error: ${err}`);\n          return;\n        }\n        this._name = rfUser.name;\n        console.log(`Logged in as ${this._name}`);\n        firebase.auth().signInWithCustomToken(rfUser.token);\n      });\n    },\n    signOut() {\n      firebase.auth().signOut().catch(error => {\n        var errorCode = error.code;\n        var errorMessage = error.message;\n        alert('Sign out error:', errorCode, errorMessage);\n      });\n    }\n  }\n});\n\n//# sourceURL=webpack://frontend/./src/components/AuthManager.vue?./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use%5B0%5D!./node_modules/vue-loader/dist/index.js??ruleSet%5B0%5D.use%5B0%5D");
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/NavigationBar.vue?vue&type=script&setup=true&lang=js":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/NavigationBar.vue?vue&type=script&setup=true&lang=js ***!
@@ -27,17 +16,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* eslint-disable */\n/* harm
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _globals__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./globals */ \"./src/components/globals.js\");\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  __name: 'NavigationBar',\n  setup(__props, {\n    expose\n  }) {\n    expose();\n    let menuPosition = 0;\n    let open = false;\n    const menuSize = 100;\n    const openTime = 1.0;\n    function openMenu() {\n      menuPosition += menuSize / (openTime * 1000 / 20);\n      if (menuPosition > menuSize) menuPosition = menuSize;\n      document.getElementById(\"menu\").style.top = menuPosition - 100 + \"%\";\n      if (menuPosition < menuSize && open) {\n        setTimeout(() => {\n          openMenu();\n        }, 20);\n      }\n    }\n    function closeMenu() {\n      menuPosition -= menuSize / (openTime * 1000 / 20);\n      if (menuPosition < 0) menuPosition = 0;\n      document.getElementById(\"menu\").style.top = menuPosition - 100 + \"%\";\n      if (menuPosition > 0 && !open) {\n        setTimeout(() => {\n          closeMenu();\n        }, 20);\n      }\n    }\n    function clickMenu() {\n      open = !open;\n      if (open) {\n        openMenu();\n      } else {\n        closeMenu();\n      }\n    }\n    function signOut() {\n      /* eslint-disable */\n      _globals__WEBPACK_IMPORTED_MODULE_0__[\"default\"].authManager.signOut();\n    }\n    const __returned__ = {\n      get menuPosition() {\n        return menuPosition;\n      },\n      set menuPosition(v) {\n        menuPosition = v;\n      },\n      get open() {\n        return open;\n      },\n      set open(v) {\n        open = v;\n      },\n      menuSize,\n      openTime,\n      openMenu,\n      closeMenu,\n      clickMenu,\n      signOut,\n      get globals() {\n        return _globals__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n      }\n    };\n    Object.defineProperty(__returned__, '__isScriptSetup', {\n      enumerable: false,\n      value: true\n    });\n    return __returned__;\n  }\n});\n\n//# sourceURL=webpack://frontend/./src/components/NavigationBar.vue?./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use%5B0%5D!./node_modules/vue-loader/dist/index.js??ruleSet%5B0%5D.use%5B0%5D");
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=template&id=5bea3f36":
-/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=template&id=5bea3f36 ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; }\n/* harmony export */ });\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.runtime.esm-bundler.js\");\n\nfunction render(_ctx, _cache, $props, $setup, $data, $options) {\n  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(\"p\");\n}\n\n//# sourceURL=webpack://frontend/./src/components/AuthManager.vue?./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use%5B0%5D!./node_modules/vue-loader/dist/templateLoader.js??ruleSet%5B1%5D.rules%5B3%5D!./node_modules/vue-loader/dist/index.js??ruleSet%5B0%5D.use%5B0%5D");
 
 /***/ }),
 
@@ -74,17 +52,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 
 /***/ }),
 
-/***/ "./src/components/AuthManager.vue":
-/*!****************************************!*\
-  !*** ./src/components/AuthManager.vue ***!
-  \****************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _AuthManager_vue_vue_type_template_id_5bea3f36__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AuthManager.vue?vue&type=template&id=5bea3f36 */ \"./src/components/AuthManager.vue?vue&type=template&id=5bea3f36\");\n/* harmony import */ var _AuthManager_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuthManager.vue?vue&type=script&lang=js */ \"./src/components/AuthManager.vue?vue&type=script&lang=js\");\n/* harmony import */ var C_Users_benderet_Desktop_School_CSSE280_untitled_idle_game_frontend_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ \"./node_modules/vue-loader/dist/exportHelper.js\");\n\n\n\n\n;\nconst __exports__ = /*#__PURE__*/(0,C_Users_benderet_Desktop_School_CSSE280_untitled_idle_game_frontend_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(_AuthManager_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"], [['render',_AuthManager_vue_vue_type_template_id_5bea3f36__WEBPACK_IMPORTED_MODULE_0__.render],['__file',\"src/components/AuthManager.vue\"]])\n/* hot reload */\nif (false) {}\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (__exports__);\n\n//# sourceURL=webpack://frontend/./src/components/AuthManager.vue?");
-
-/***/ }),
-
 /***/ "./src/components/NavigationBar.vue":
 /*!******************************************!*\
   !*** ./src/components/NavigationBar.vue ***!
@@ -96,17 +63,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Nav
 
 /***/ }),
 
-/***/ "./src/components/AuthManager.vue?vue&type=script&lang=js":
-/*!****************************************************************!*\
-  !*** ./src/components/AuthManager.vue?vue&type=script&lang=js ***!
-  \****************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AuthManager_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; }\n/* harmony export */ });\n/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AuthManager_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AuthManager.vue?vue&type=script&lang=js */ \"./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=script&lang=js\");\n \n\n//# sourceURL=webpack://frontend/./src/components/AuthManager.vue?");
-
-/***/ }),
-
 /***/ "./src/components/NavigationBar.vue?vue&type=script&setup=true&lang=js":
 /*!*****************************************************************************!*\
   !*** ./src/components/NavigationBar.vue?vue&type=script&setup=true&lang=js ***!
@@ -115,17 +71,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavigationBar_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; }\n/* harmony export */ });\n/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_NavigationBar_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./NavigationBar.vue?vue&type=script&setup=true&lang=js */ \"./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/NavigationBar.vue?vue&type=script&setup=true&lang=js\");\n \n\n//# sourceURL=webpack://frontend/./src/components/NavigationBar.vue?");
-
-/***/ }),
-
-/***/ "./src/components/AuthManager.vue?vue&type=template&id=5bea3f36":
-/*!**********************************************************************!*\
-  !*** ./src/components/AuthManager.vue?vue&type=template&id=5bea3f36 ***!
-  \**********************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AuthManager_vue_vue_type_template_id_5bea3f36__WEBPACK_IMPORTED_MODULE_0__.render; }\n/* harmony export */ });\n/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_40_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AuthManager_vue_vue_type_template_id_5bea3f36__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AuthManager.vue?vue&type=template&id=5bea3f36 */ \"./node_modules/babel-loader/lib/index.js??clonedRuleSet-40.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./src/components/AuthManager.vue?vue&type=template&id=5bea3f36\");\n\n\n//# sourceURL=webpack://frontend/./src/components/AuthManager.vue?");
 
 /***/ }),
 

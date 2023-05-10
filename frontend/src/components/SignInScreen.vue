@@ -2,7 +2,7 @@
     <NavigationBar/>
     <div id="loginPage" class="text-center">
         <img src="../assets/logo.png" id="zenLogo">
-        <button class="btn" id="btnSignIn" @click.left="testMethod"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>
+        <button class="btn" id="btnSignIn" @click.left="signIn"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
         NavigationBar,
     },
     methods: {
-        testMethod() {
+        signIn() {
             globals.authManager.signIn();
         }
     }
