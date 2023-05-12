@@ -255,7 +255,7 @@ globals.Theme = class {
         this.fgColor = params.fgColor || "#000000";
         this.accentColor = params.accentColor || "#ffffff";
         this.lastTouched = params.lastTouched;
-        this.price = params.price || 1;
+        this.price = params.price || 0;
     }
 }
 

@@ -2,6 +2,7 @@
 <script>
 import NavigationBar from './NavigationBar.vue';
 import AddThemeModal from './AddThemeModal.vue';
+import EditThemeModal from './EditThemeModal.vue';
 
 import globals from './globals.js';
 // let themes = [
@@ -39,6 +40,10 @@ export default {
       document.getElementById("themeBoxes").innerHTML="";
       for (let i = 0; i < globals.themeManager.length; i++) {
         let theme = globals.themeManager.getThemeAtIndex(i);
+        let editButton = `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /><button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-toggle = "modal" data-target="#editTheme">edit</button>`;
+        if (theme.creator!=globals.authManager.uid) {
+          editButton = "";
+        }
         let themeString = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${theme.imageURL}); top:${100+400*i}px">
             <p data-v-8f2b0d58 class = "name" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
 				  1px 1px 2px ${theme.accentColor},
@@ -55,10 +60,18 @@ export default {
 				  1px 1px 2px ${theme.accentColor},
 				  1px -1px 0 ${theme.accentColor},
 				  -1px -1px 0 ${theme.accentColor};">(${theme.price} ZP)</p>
+          ${editButton}
         </div>`;
         document.getElementById("themeBoxes").innerHTML+=themeString;
+        if (theme.creator==globals.authManager.uid) {
+          document.getElementById(`editButton${i}`).addEventListener("click", ()=>this.updateEdit(theme.id, theme.name, theme.imageUrl, theme.fgColor, theme.accentColor, theme.price));
+        }
       }
     },
+    updateEdit(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice) {
+      const {update} = this.$refs.editTheme;
+      update(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice);
+    }
     // add() {
     //   let id = themes.length + 1;
     //   themes.push({
@@ -75,15 +88,22 @@ export default {
     },
     components: {
     NavigationBar,
-    AddThemeModal
+    AddThemeModal,
+    EditThemeModal
 }
 }
 </script>
 <script setup>
+  // updateEdit("asdadeadea", "", "", "", "#fffff", 0);
+  // function updateEdit(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice) {
+  //   console.log("hello");
+  //   EditThemeModal.methods.update(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice);
+  // }
 </script>
 <template>
   <NavigationBar/>
   <AddThemeModal id="addTheme"/>
+  <EditThemeModal id="editTheme" ref = "editTheme"/>
   <div id = "themeBoxes"></div>
   <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addTheme">+</button>
 </template>
