@@ -384,11 +384,10 @@ const _StorageManager = class {
      *      globals.storageRef.uploadThemeImage(<theme index>, event.target.files[0]);
      *  }
      * ```
-     * @param {string} themeID the theme ID for the file to upload
+     * @param {string} theme the theme the background image belongs to
      * @param {File} file the file to upload onto the server
      */
-    uploadThemeImage(themeIndex, file) {
-        const theme = globals.themeManager.getThemeAtIndex(themeIndex);
+    uploadThemeImage(theme, file) {
         const storageRef = firebase.storage().ref().child(`backgroundImages/${theme.id}`); // Create new child in Firebase storage
         storageRef.put(file)
         .then(((theme) => {
@@ -405,8 +404,6 @@ const _StorageManager = class {
             })
         }).bind(theme));
     }
-
-
 }
 
 globals.storageManager = new _StorageManager();

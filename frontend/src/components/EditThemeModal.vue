@@ -86,7 +86,7 @@ export default {
                 this.inputPrice
             );
         },
-        update(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice) {
+        update(editid, inputName, inputFgColor, inputAccentColor, inputPrice) {
             this.editid = editid;
             this.inputName = inputName;
             this.inputFgColor = inputFgColor;

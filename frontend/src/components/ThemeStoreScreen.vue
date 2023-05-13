@@ -34,13 +34,20 @@ export default {
     },
     mounted() {
       globals.themeManager.beginListening(this.loadPage);
+      /* eslint-disable */
+      $("#editThemeModal").on("show.bs.modal", (event) => {
+        const themeId = Number.parseInt(event.relatedTarget.dataset.editId);
+        const theme = globals.themeManager.getThemeAtIndex(themeId);
+        const {update} = this.$refs.editThemeModal;
+        update(theme.id, theme.name, theme.fgColor, theme.accentColor, theme.price);
+      }).bind(this);
     },
     methods: {
       loadPage() {
       document.getElementById("themeBoxes").innerHTML="";
       for (let i = 0; i < globals.themeManager.length; i++) {
         let theme = globals.themeManager.getThemeAtIndex(i);
-        let editButton = `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /><button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-toggle = "modal" data-target="#editTheme">edit</button>`;
+        let editButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button>`;
         if (theme.creator!=globals.authManager.uid) {
           editButton = "";
         }
@@ -63,14 +70,7 @@ export default {
           ${editButton}
         </div>`;
         document.getElementById("themeBoxes").innerHTML+=themeString;
-        if (theme.creator==globals.authManager.uid) {
-          document.getElementById(`editButton${i}`).addEventListener("click", ()=>this.updateEdit(theme.id, theme.name, theme.imageUrl, theme.fgColor, theme.accentColor, theme.price));
-        }
       }
-    },
-    updateEdit(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice) {
-      const {update} = this.$refs.editTheme;
-      update(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice);
     }
     // add() {
     //   let id = themes.length + 1;
@@ -102,8 +102,8 @@ export default {
 </script>
 <template>
   <NavigationBar/>
-  <AddThemeModal id="addTheme"/>
-  <EditThemeModal id="editTheme" ref = "editTheme"/>
+  <AddThemeModal id="addThemeModal"/>
+  <EditThemeModal id="editThemeModal" ref = "editThemeModal"/>
   <div id = "themeBoxes"></div>
   <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addTheme">+</button>
 </template>
