@@ -105,7 +105,7 @@ export default {
   <AddThemeModal id="addThemeModal"/>
   <EditThemeModal id="editThemeModal" ref = "editThemeModal"/>
   <div id = "themeBoxes"></div>
-  <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addTheme">+</button>
+  <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addThemeModal">+</button>
 </template>
 
 <style scoped>

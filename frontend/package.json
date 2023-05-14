@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@syncfusion/ej2-vue-buttons": "^21.1.37",
+    "bootstrap-colorpicker": "^3.4.0",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6"

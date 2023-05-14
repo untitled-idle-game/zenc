@@ -95,7 +95,17 @@ export default {
         }
     },
     mounted() {
-        
+        /* eslint-disable */
+        $(`#${this.$props.id}inputFgColor`).colorpicker();
+        $(`#${this.$props.id}inputAccentColor`).colorpicker();
+
+        $(`#${this.$props.id}inputFgColor`).on('colorpickerChange', (event) => {
+            this.inputFgColor = event.color.toString();
+        });
+
+        $(`#${this.$props.id}inputAccentColor`).on('colorpickerChange', (event) => {
+            this.inputAccentColor = event.color.toString();
+        });
     }
 };
 </script>
