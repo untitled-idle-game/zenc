@@ -1,5 +1,5 @@
 <template>
-    <img class="circle" src="../assets/circle.png" alt="">
+    <img class="circle" src="../assets/circle.png" alt=""/>
 </template>
 
 <style scoped>

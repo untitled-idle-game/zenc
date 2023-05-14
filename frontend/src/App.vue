@@ -1,8 +1,6 @@
 <template>
   <!-- Add your RouterLinks here (until we get a functioning menu, that is) -->
-  <body>
-    <RouterView/>
-  </body>
+  <RouterView/>
 </template>
 
 <!-- If it is necessary to import things, do it in the script setup 

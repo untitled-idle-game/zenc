@@ -36,12 +36,14 @@
 <template>
   <!-- Put navBar here when it is implemented -->
   <NavigationBar/>
+  <div class="container page-container text-center">
   <div class="pointCount">
-    <p id="count">{{ count }}</p>
-    <p>Zen Points</p>
-  </div>
-  <div>
-    <ZenCircle />
+      <p id="count">{{ count }}</p>
+      <p>Zen Points</p>
+    </div>
+    <div>
+      <ZenCircle />
+    </div>
   </div>
 </template>
 
