@@ -43,34 +43,42 @@ export default {
       }).bind(this);
     },
     methods: {
-      loadPage() {
-      document.getElementById("themeBoxes").innerHTML="";
-      for (let i = 0; i < globals.themeManager.length; i++) {
-        let theme = globals.themeManager.getThemeAtIndex(i);
-        let editButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button>`;
-        if (theme.creator!=globals.authManager.uid) {
-          editButton = "";
+      async loadPage() {
+        document.getElementById("themeBoxes").innerHTML="";
+        for (let i = 0; i < globals.themeManager.length; i++) {
+          let theme = globals.themeManager.getThemeAtIndex(i);
+          let themeImage = ""
+          await globals.storageManager.getImageUrl(theme.id).then((imageURL) => {
+            themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${imageURL}); top:${100+400*i}px">`
+          })
+          .catch(() => {
+            // TODO: Eric - include what happens when the image is not found
+            themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
+          });
+          let editButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button>`;
+          if (theme.creator!=globals.authManager.uid) {
+            editButton = "";
+          }
+          let themeString = `${themeImage}
+              <p data-v-8f2b0d58 class = "name" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
+            1px 1px 2px ${theme.accentColor},
+            1px -1px 0 ${theme.accentColor},
+            -1px -1px 0 ${theme.accentColor};">${theme.name}</p>
+              <p data-v-8f2b0d58 class = "author" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
+            1px 1px 2px ${theme.accentColor},
+            1px -1px 0 ${theme.accentColor},
+            -1px -1px 0 ${theme.accentColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
+            1px 1px 2px ${theme.accentColor},
+            1px -1px 0 ${theme.accentColor},
+            -1px -1px 0 ${theme.accentColor};">by ${theme.creator}</p>
+              <p data-v-8f2b0d58 class = "purchase" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
+            1px 1px 2px ${theme.accentColor},
+            1px -1px 0 ${theme.accentColor},
+            -1px -1px 0 ${theme.accentColor};">(${theme.price} ZP)</p>
+            ${editButton}
+          </div>`;
+          document.getElementById("themeBoxes").innerHTML+=themeString;
         }
-        let themeString = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${theme.imageURL}); top:${100+400*i}px">
-            <p data-v-8f2b0d58 class = "name" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
-				  1px 1px 2px ${theme.accentColor},
-				  1px -1px 0 ${theme.accentColor},
-				  -1px -1px 0 ${theme.accentColor};">${theme.name}</p>
-            <p data-v-8f2b0d58 class = "author" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
-				  1px 1px 2px ${theme.accentColor},
-				  1px -1px 0 ${theme.accentColor},
-				  -1px -1px 0 ${theme.accentColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
-				  1px 1px 2px ${theme.accentColor},
-				  1px -1px 0 ${theme.accentColor},
-				  -1px -1px 0 ${theme.accentColor};">by ${theme.creator}</p>
-            <p data-v-8f2b0d58 class = "purchase" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
-				  1px 1px 2px ${theme.accentColor},
-				  1px -1px 0 ${theme.accentColor},
-				  -1px -1px 0 ${theme.accentColor};">(${theme.price} ZP)</p>
-          ${editButton}
-        </div>`;
-        document.getElementById("themeBoxes").innerHTML+=themeString;
-      }
     }
     // add() {
     //   let id = themes.length + 1;

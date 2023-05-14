@@ -13,7 +13,6 @@ globals.FB_KEY_USER_OWNED_THEMES = "ownedThemes";
 globals.FB_KEY_USER_SELECTED_THEME = "selectedTheme";
 
 globals.FB_KEY_THEME_NAME = "name";
-globals.FB_KEY_THEME_IMAGE_URL = "imageURL";
 globals.FB_KEY_THEME_CREATOR = "creator";
 globals.FB_KEY_THEME_FGCOLOR = "fgColor";
 globals.FB_KEY_THEME_ACCENT_COLOR = "accentColor";
@@ -240,7 +239,6 @@ globals.Theme = class {
      * @param {id} id the ID of the theme 
      * @param {Object} params the parameters used to create the theme:
      *  - name: the name of the theme, in English.
-     *  - imageUrl: The background image to use for the theme.
      *  - creator: the UID of the person who created the theme.
      *  - fgColor: the foreground color of the theme.
      *  - accentColor: the accent color of the theme.
@@ -250,7 +248,6 @@ globals.Theme = class {
     constructor(id, params) {
         this.id = id
         this.name = params.name || "Untitled Theme";
-        this.imageUrl = params.imageUrl;
         this.creator = params.creator;
         this.fgColor = params.fgColor || "#000000";
         this.accentColor = params.accentColor || "#ffffff";
@@ -272,17 +269,15 @@ const _ThemeManager = class {
      * Adds a new theme to the server.
      * 
      * @param {string} name the name of the theme, in English
-     * @param {string} imageUrl the URL of the background image
      * @param {string} fgColor the foreground color
      * @param {string} accentColor the accent color
      * @param {number} price the price of the theme in zenpoints
      * @returns a promise for the theme being added to the server
      */
-	add(name, imageUrl, fgColor, accentColor, price) {
+	add(name, fgColor, accentColor, price) {
 		return this._ref.add({
             [globals.FB_KEY_THEME_NAME]: name,
 			[globals.FB_KEY_THEME_CREATOR]: globals.authManager.uid,
-            [globals.FB_KEY_THEME_IMAGE_URL]: imageUrl,
             [globals.FB_KEY_THEME_FGCOLOR]: fgColor,
             [globals.FB_KEY_THEME_ACCENT_COLOR]: accentColor,
             [globals.FB_KEY_THEME_PRICE]: price,
@@ -313,19 +308,17 @@ const _ThemeManager = class {
      * 
      * @param {string} id the id of the theme on the server
      * @param {string} name the name of the theme, in English
-     * @param {string} imageUrl the URL of the background image
      * @param {string} fgColor the foreground color
      * @param {string} accentColor the accent color
      * @param {number} price the price of the theme in zenpoints
      * @returns a promise for the theme being updated onto the server
      */
-    update(id, name, imageUrl, fgColor, accentColor, price)
+    update(id, name, fgColor, accentColor, price)
     {
         const updateRef = this._ref.doc(id);
         return updateRef.update({
             [globals.FB_KEY_THEME_NAME]: name,
 			[globals.FB_KEY_THEME_CREATOR]: globals.authManager.uid,
-            [globals.FB_KEY_THEME_IMAGE_URL]: imageUrl,
             [globals.FB_KEY_THEME_FGCOLOR]: fgColor,
             [globals.FB_KEY_THEME_ACCENT_COLOR]: accentColor,
             [globals.FB_KEY_THEME_PRICE]: price,
@@ -355,7 +348,6 @@ const _ThemeManager = class {
         console.log(docSnapshot);
 		const theme = new globals.Theme(docSnapshot.id, {
             name: docSnapshot.get(globals.FB_KEY_THEME_NAME),
-            imageUrl: docSnapshot.get(globals.FB_KEY_THEME_IMAGE_URL),
             creator: docSnapshot.get(globals.FB_KEY_THEME_CREATOR),
             fgColor: docSnapshot.get(globals.FB_KEY_THEME_FGCOLOR),
             accentColor: docSnapshot.get(globals.FB_KEY_THEME_ACCENT_COLOR),
@@ -384,25 +376,18 @@ const _StorageManager = class {
      *      globals.storageRef.uploadThemeImage(<theme index>, event.target.files[0]);
      *  }
      * ```
-     * @param {string} theme the theme the background image belongs to
+     * @param {Theme} theme the theme the background image belongs to
      * @param {File} file the file to upload onto the server
      */
-    uploadThemeImage(theme, file) {
-        const storageRef = firebase.storage().ref().child(`backgroundImages/${theme.id}`); // Create new child in Firebase storage
-        storageRef.put(file)
-        .then(((theme) => {
-            storageRef.getDownloadURL()
-            .then((downloadUrl) => {
-                theme.update(
-                    theme.id,
-                    theme.name,
-                    downloadUrl,
-                    theme.fgColor,
-                    theme.accentColor,
-                    theme.price
-                )
-            })
-        }).bind(theme));
+    uploadThemeImage(themeId, file) {
+        const storageRef = firebase.storage().ref().child("backgroundImages/" + themeId); // Create new child in Firebase storage
+        console.log(storageRef);
+        return storageRef.put(file);
+    }
+    
+    getImageUrl(themeId) {
+        const storageRef = firebase.storage().ref().child("backgroundImages/" + themeId);
+        return storageRef.getDownloadURL();
     }
 }
 

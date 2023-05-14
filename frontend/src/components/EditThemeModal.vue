@@ -73,18 +73,21 @@ export default {
     },
     methods: {
         inputBackgroundFileChanged(event) {
-            console.log(event);
+            this.inputBackground = event.target.files[0];
         },
         editTheme() {
-            console.log("TODO: edit theme");
             globals.themeManager.update(
                 this.editid,
                 this.inputName,
-                "backgroundImages/a.jpg",
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            );
+            ).then((data) => {
+                console.log(data, this.inputBackground);
+                if (this.inputBackground) {
+                    globals.storageManager.uploadThemeImage(this.editid, this.inputBackground);
+                }
+            });
         },
         update(editid, inputName, inputFgColor, inputAccentColor, inputPrice) {
             this.editid = editid;

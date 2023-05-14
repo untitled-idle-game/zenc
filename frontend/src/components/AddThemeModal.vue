@@ -11,11 +11,11 @@
         <!-- Form for add modal -->
         <div class="container-fluid">
             <div class="form-group row">
-                <label for="inputName">Name</label> <!-- for is an accessibility thing -->
+                <label :for="`${id}inputName`">Name</label>
                 <input type="text" class="form-control" placeholder="Theme Name" :id="id+'inputName'" v-model="inputName"/>
             </div>
             <div class="form-group row">
-                <label for="inputName">Background</label> <!-- for is an accessibility thing -->
+                <label :for="`${id}inputBackground`">Background</label>
                 <input type="file" class="form-control" placeholder="Theme Name" :id="id+'inputBackground'" v-on:change="inputBackgroundFileChanged"/>
             </div>
             <div class="form-group row">
@@ -63,22 +63,22 @@ export default {
             inputBackground: null,
             inputFgColor: "",
             inputAccentColor: "",
-            inputPrice: 0
+            inputPrice: 0,
+            currentFile: null,
         }
     },
     methods: {
         inputBackgroundFileChanged(event) {
-            console.log(event);
+            this.inputBackground = event.target.files[0];
         },
         addTheme() {
             console.log("TODO: add theme");
             globals.themeManager.add(
                 this.inputName,
-                "backgroundImages/a.jpg",
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            );
+            )
         }
     },
     mounted() {
