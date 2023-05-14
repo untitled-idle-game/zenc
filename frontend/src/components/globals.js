@@ -225,6 +225,16 @@ const _UserManager = class {
             [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
         });
     }
+
+    /**
+     * Gets the equipped theme for uid.
+     * @param {string} uid the user ID to check
+     * @returns a new Theme object representing what the user has equipped
+     */
+    getEquippedTheme(uid) {
+        const userRef = this._ref.doc(uid);
+        return globals.themeManager.getThemeFromID(userRef.get(globals.FB_KEY_USER_SELECTED_THEME));
+    }
 }
 
 globals.userManager = new _UserManager();
@@ -353,6 +363,23 @@ const _ThemeManager = class {
             accentColor: docSnapshot.get(globals.FB_KEY_THEME_ACCENT_COLOR),
             lastTouched: docSnapshot.get(globals.FB_KEY_THEME_LAST_TOUCHED),
             price: docSnapshot.get(globals.FB_KEY_THEME_PRICE),
+        });
+		return theme;
+	}
+
+    /**
+     * @param {string} ID the ID to get the theme of
+     * @returns a new Theme object representing the Theme at the stored ID
+     */
+    getThemeFromID(id) {
+        const docRef = this._ref.doc(id);
+        const theme = new globals.Theme(id, {
+            name: docRef.get(globals.FB_KEY_THEME_NAME),
+            creator: docRef.get(globals.FB_KEY_THEME_CREATOR),
+            fgColor: docRef.get(globals.FB_KEY_THEME_FGCOLOR),
+            accentColor: docRef.get(globals.FB_KEY_THEME_ACCENT_COLOR),
+            lastTouched: docRef.get(globals.FB_KEY_THEME_LAST_TOUCHED),
+            price: docRef.get(globals.FB_KEY_THEME_PRICE),
         });
 		return theme;
 	}
