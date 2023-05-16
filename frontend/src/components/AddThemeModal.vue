@@ -61,8 +61,8 @@ export default {
             errorText:"",
             inputName: "Untitled Theme",
             inputBackground: null,
-            inputFgColor: "",
-            inputAccentColor: "",
+            inputFgColor: "#000000",
+            inputAccentColor: "#FFFFFF",
             inputPrice: 0,
             currentFile: null,
         }
@@ -72,13 +72,16 @@ export default {
             this.inputBackground = event.target.files[0];
         },
         addTheme() {
-            console.log("TODO: add theme");
             globals.themeManager.add(
                 this.inputName,
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            )
+            ).then(() => {
+                if (this.inputBackground) {
+                    globals.storageManager.uploadThemeImage(this.editid, this.inputBackground);
+                }
+            });
         }
     },
     mounted() {
@@ -87,11 +90,15 @@ export default {
         $(`#${this.$props.id}inputAccentColor`).colorpicker();
         
         $(`#${this.$props.id}inputFgColor`).on('colorpickerChange', (event) => {
-            this.inputFgColor = event.color.toString();
+            if (event.color != null) {
+                this.inputFgColor = event.color.toString();
+            }
         });
 
         $(`#${this.$props.id}inputAccentColor`).on('colorpickerChange', (event) => {
-            this.inputAccentColor = event.color.toString();
+            if (event.color != null) {
+                this.inputAccentColor = event.color.toString();
+            }
         });
     }
 };

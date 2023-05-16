@@ -29,7 +29,6 @@ const _AuthManager = class {
         firebase.auth().onAuthStateChanged((user) => {
             const isSignedIn = !!user;
             this._user = user;
-            console.log(user);
             const onLoginPage = !!document.querySelector("#loginPage");
             if (!onLoginPage && !isSignedIn) {
                 location.href = "/login";
@@ -41,7 +40,6 @@ const _AuthManager = class {
     }
 
     signIn() {
-        console.log("Sign in");
         // Auth key was generated via Rosefire and Firebase
         // We should probably store this somewhere else...
         Rosefire.signIn("91ca8bd9-3a3d-4bb6-b296-80ba167fff5b", (err, rfUser) => {
@@ -53,9 +51,8 @@ const _AuthManager = class {
                 uid: rfUser.username,
                 name: rfUser.name
             };
-            console.log(`Logged in as`, rfUser);
             firebase.auth().signInWithCustomToken(rfUser.token).then((user) => {
-                console.log(user);
+                // nothing here
             });
         })
     }
@@ -89,6 +86,10 @@ const _AuthManager = class {
     get avatarUrl() {
         return this._user.photoURL;
     }
+
+    get selectedTheme() {
+        return globals.userManager.getEquippedTheme(this.uid);
+    }
 }
 
 /**
@@ -111,7 +112,6 @@ const _UserManager = class {
 		const userRef = this._ref.doc(uid);
 		this._unsubscribe = userRef.onSnapshot((doc) => {
 			if (doc.exists) {
-				console.log("Document data:", doc.data());
 				this._doc = doc;
 				changeListener();
 			} else {
@@ -129,12 +129,10 @@ const _UserManager = class {
 		const userRef = this._ref.doc(uid);
 		return userRef.get().then((doc) => {
 			if (doc.exists) {
-				console.log("Document data:", doc.data());
 				// Do nothing - there is already a user
 				return false;
 			} else {
 				// doc.data() will be undefined in this case
-				console.log("No such document! Create this user!");
 				return userRef.set({
 					[globals.FB_KEY_USER_NAME]: name,
 					[globals.FB_KEY_USER_AVATAR]: photoUrl,
@@ -142,16 +140,13 @@ const _UserManager = class {
                     [globals.FB_KEY_USER_OWNED_THEMES]: []
 				})
 				.then(() => {
-					console.log("Document successfully written!");
 					return true;
 				})
 				.catch((error) => {
-					console.error("Error writing document: ", error);
 					return false;
 				});
 			}
 		}).catch((error) => {
-			console.log("Error getting document:", error);
             return false;
 		});
 	}
@@ -355,7 +350,6 @@ const _ThemeManager = class {
 		if (!docSnapshot) {
 			return null;
 		}
-        console.log(docSnapshot);
 		const theme = new globals.Theme(docSnapshot.id, {
             name: docSnapshot.get(globals.FB_KEY_THEME_NAME),
             creator: docSnapshot.get(globals.FB_KEY_THEME_CREATOR),
@@ -408,7 +402,6 @@ const _StorageManager = class {
      */
     uploadThemeImage(themeId, file) {
         const storageRef = firebase.storage().ref().child("backgroundImages/" + themeId); // Create new child in Firebase storage
-        console.log(storageRef);
         return storageRef.put(file);
     }
     

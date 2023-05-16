@@ -41,23 +41,46 @@ function signOut() {
 }
 </script>
 
+<script>
+export default {
+data() {
+  return {
+    menuStyleObject: {}
+  }
+},
+methods: {
+  updateStyles() {
+    console.log(globals.authManager.selectedTheme);
+    if (globals.authManager.isSignedIn) {
+      this.menuStyleObject = {
+        backgroundColor: globals.authManager.selectedTheme.fgColor,
+        color: globals.authManager.selectedTheme.accentColor
+      }
+    }
+  }
+},
+mounted() {
+  globals.authManager.beginListening(this.updateStyles);
+}
+};
+</script>
+
 <template>
   <!-- TODO: Eric, make the links look nicer -->
   <div class="menubackground">
   </div>
-    <div id="menu">
-      <div id = "links">
-        <RouterLink to="/" class = "linkClass">Home</RouterLink>
-        <br>
-        <br>
-        <RouterLink to="/themestore" class = "linkClass">Theme Store</RouterLink>
-        <br>
-        <br>
-        <button @click = "signOut" class = "linkClass">Sign Out</button>
+  <div id="menu">
+    <div id = "links">
+      <RouterLink to="/" :style="menuStyleObject" class = "linkClass">Home</RouterLink>
+      <br>
+      <br>
+      <RouterLink to="/themestore" :style="menuStyleObject" class = "linkClass">Theme Store</RouterLink>
+      <br>
+      <br>
+      <button @click = "signOut" :style="menuStyleObject" class = "linkClass">Sign Out</button>
     </div>
-      </div>
+  </div>
   <div class="menuicon">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <button id = "menubutton" @click = "clickMenu" class="material-symbols-outlined">menu</button>
   </div>
 </template>

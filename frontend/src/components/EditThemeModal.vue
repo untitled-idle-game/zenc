@@ -81,8 +81,7 @@ export default {
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            ).then((data) => {
-                console.log(data, this.inputBackground);
+            ).then(() => {
                 if (this.inputBackground) {
                     globals.storageManager.uploadThemeImage(this.editid, this.inputBackground);
                 }
