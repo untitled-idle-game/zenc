@@ -3,6 +3,7 @@
 import NavigationBar from './NavigationBar.vue';
 import AddThemeModal from './AddThemeModal.vue';
 import EditThemeModal from './EditThemeModal.vue';
+import DeleteThemeModal from './DeleteThemeModal.vue';
 
 import globals from './globals.js';
 // let themes = [
@@ -41,6 +42,12 @@ export default {
         const {update} = this.$refs.editThemeModal;
         update(theme.id, theme.name, theme.fgColor, theme.accentColor, theme.price);
       }).bind(this);
+      $("#deleteThemeModal").on("show.bs.modal", (event) => {
+        const themeId = Number.parseInt(event.relatedTarget.dataset.deleteId);
+        const theme = globals.themeManager.getThemeAtIndex(themeId);
+        const {update} = this.$refs.deleteThemeModal;
+        update(theme.id);
+      }).bind(this);
     },
     methods: {
       async loadPage() {
@@ -55,9 +62,9 @@ export default {
             // TODO: Eric - include what happens when the image is not found
             themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
           });
-          let editButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button>`;
+          let editanddeleteButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" id = "deleteButton${i}" data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
           if (theme.creator!=globals.authManager.uid) {
-            editButton = "";
+            editanddeleteButton = "";
           }
           let themeString = `${themeImage}
               <p data-v-8f2b0d58 class = "name" style = "color: ${theme.fgColor}; text-shadow: -1px 1px 2px ${theme.accentColor},
@@ -75,7 +82,7 @@ export default {
             1px 1px 2px ${theme.accentColor},
             1px -1px 0 ${theme.accentColor},
             -1px -1px 0 ${theme.accentColor};">(${theme.price} ZP)</p>
-            ${editButton}
+            ${editanddeleteButton}
           </div>`;
           document.getElementById("themeBoxes").innerHTML+=themeString;
         }
@@ -97,7 +104,8 @@ export default {
     components: {
     NavigationBar,
     AddThemeModal,
-    EditThemeModal
+    EditThemeModal,
+    DeleteThemeModal
 }
 }
 </script>
@@ -112,6 +120,7 @@ export default {
   <NavigationBar/>
   <AddThemeModal id="addThemeModal"/>
   <EditThemeModal id="editThemeModal" ref = "editThemeModal"/>
+  <DeleteThemeModal id="deleteThemeModal" ref = "deleteThemeModal"/>
   <div id = "themeBoxes"></div>
   <button class = "btn bmd-btn-fab" id="addButton" data-toggle="modal" data-target="#addThemeModal">+</button>
 </template>

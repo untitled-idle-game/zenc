@@ -59,7 +59,6 @@ export default {
     props: ["id"],
     data(props) {
         const { id } = toRefs(props);
-        console.log(id.value);
         return {
             propid: id.value,
             editid:"",
