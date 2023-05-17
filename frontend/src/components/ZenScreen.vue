@@ -41,7 +41,7 @@
       <p id="count">{{ count }}</p>
       <p>Zen Points</p>
     </div>
-    <div>
+    <div class="circle">
       <ZenCircle />
     </div>
   </div>
@@ -50,6 +50,9 @@
 <style scoped>
   .pointCount {
     font-size: x-large;
+    justify-content: center;
+  }
+  .circle {
     justify-content: center;
   }
 </style>
