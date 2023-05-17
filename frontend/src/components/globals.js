@@ -253,10 +253,21 @@ const _UserManager = class {
         const userRef = this._ref.doc(uid);
         return userRef.get().then((doc) => {
             return doc.get(globals.FB_KEY_USER_ZENPOINTS);
-        }).then(async(themeId) => {
-            return await globals.themeManager.getThemeFromID(themeId);
         }).catch(() => {
-            return null;
+            return 0;
+        });
+    }
+
+    /**
+     * Gets the themes owned by uid.
+     * 
+     */
+    getOwnedThemes(uid) {
+        const userRef = this._ref.doc(uid);
+        return userRef.get().then((doc) => {
+            return doc.get(globals.FB_KEY_USER_OWNED_THEMES);
+        }).catch(() => {
+            return 0;
         });
     }
 }
