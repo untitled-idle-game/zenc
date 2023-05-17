@@ -63,8 +63,8 @@ export default {
           .catch(() => {
             // TODO: Eric - include what happens when the image is not found
             themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
-          });
-          let editanddeleteButton = `<button class = "btn bmd-btn-fab editButtons material-symbols-outlined" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" id = "deleteButton${i}" data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
+          });//
+          let editanddeleteButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined editButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button data-v-8f2b0d58 class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "deleteButton${i}"  data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
           if (theme.creator!=globals.authManager.uid) {
             editanddeleteButton = "";
           }
@@ -150,6 +150,16 @@ export default {
     margin-top: 7%;
     margin-bottom: 0%;
     font-size: xx-large;
+  }
+  .editButtons {
+    position: absolute;
+      right :5%;
+      bottom: 175px;
+  }
+  .deleteButtons {
+    position: absolute;
+      right:5%;
+      bottom: 50px;
   }
   .author {
     color:white;
