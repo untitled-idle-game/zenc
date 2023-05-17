@@ -50,13 +50,25 @@ data() {
 },
 methods: {
   updateStyles() {
-    console.log(globals.authManager.selectedTheme);
     if (globals.authManager.isSignedIn) {
-      this.menuStyleObject = {
-        backgroundColor: globals.authManager.selectedTheme.fgColor,
-        color: globals.authManager.selectedTheme.accentColor
-      }
+      globals.authManager.getSelectedTheme()
+      .then((selectedTheme) => {
+        this.updateSelectedTheme(selectedTheme)
+      });
     }
+  },
+  updateSelectedTheme(selectedTheme) {
+    // Foreground color
+    document.querySelector("#menu").style.backgroundColor = selectedTheme.fgColor;
+    document.querySelectorAll(".menubackground").forEach((elem) => {
+      elem.style.backgroundColor = selectedTheme.fgColor;
+    });
+
+    // Accent color
+    document.querySelectorAll(".linkClass").forEach((elem) => {
+      elem.style.color = selectedTheme.accentColor;
+    });
+    document.querySelector("#menubutton").style.color = selectedTheme.accentColor;
   }
 },
 mounted() {
@@ -92,7 +104,7 @@ mounted() {
     left: 0px;
     width: 100%;
     height: 35px;
-    background-color: navy;
+    /* background-color: navy; */
     z-index: 10;
   }
   #menu {
@@ -101,7 +113,7 @@ mounted() {
     left: 0px;
     width: 300px;
     height: 100%;
-    background-color: navy;
+    /* background-color: navy; */
     border-radius: 0 0 30px 0;
     z-index: 10;
   }
@@ -114,7 +126,7 @@ mounted() {
     z-index: 10;
   }
   .linkClass {
-    color: white;
+    /* color: white; */
     font-size: xx-large;
     text-decoration: none;
     text-align:left;
@@ -127,7 +139,7 @@ mounted() {
   }
 
 .material-symbols-outlined {
-    color: white;
+    /* color: white; */
     background-color: transparent;
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
     border: 0px solid #3498db;
@@ -146,7 +158,7 @@ mounted() {
     left: 20px;
     width: 40px;
     height: 35px;
-    color: white;
+    /* color: white; */
     margin: 0px 0px 0px 0px;
     z-index: 10;
   }

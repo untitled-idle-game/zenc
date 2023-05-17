@@ -19,6 +19,8 @@ globals.FB_KEY_THEME_ACCENT_COLOR = "accentColor";
 globals.FB_KEY_THEME_LAST_TOUCHED = "lastTouched";
 globals.FB_KEY_THEME_PRICE = "price";
 
+globals.FB_DEFAULT_THEME_KEY = "jQAoRePgO4sz8LgaNKu4";
+
 /**
  * Authorization manager singleton. Do not instantiate this class - use globals.authManager instead.
  */
@@ -87,7 +89,7 @@ const _AuthManager = class {
         return this._user.photoURL;
     }
 
-    get selectedTheme() {
+    getSelectedTheme() {
         return globals.userManager.getEquippedTheme(this.uid);
     }
 }
@@ -137,7 +139,8 @@ const _UserManager = class {
 					[globals.FB_KEY_USER_NAME]: name,
 					[globals.FB_KEY_USER_AVATAR]: photoUrl,
                     [globals.FB_KEY_USER_ZENPOINTS]: 0,
-                    [globals.FB_KEY_USER_OWNED_THEMES]: []
+                    [globals.FB_KEY_USER_OWNED_THEMES]: [globals.FB_DEFAULT_THEME_KEY],
+                    [globals.FB_KEY_USER_SELECTED_THEME]: globals.FB_DEFAULT_THEME_KEY
 				})
 				.then(() => {
 					return true;
@@ -224,11 +227,17 @@ const _UserManager = class {
     /**
      * Gets the equipped theme for uid.
      * @param {string} uid the user ID to check
-     * @returns a new Theme object representing what the user has equipped
+     * @returns a promise that returns the user's selected theme
      */
     getEquippedTheme(uid) {
         const userRef = this._ref.doc(uid);
-        return globals.themeManager.getThemeFromID(userRef.get(globals.FB_KEY_USER_SELECTED_THEME));
+        return userRef.get().then((doc) => {
+            return doc.get(globals.FB_KEY_USER_SELECTED_THEME);
+        }).then(async(themeId) => {
+            return await globals.themeManager.getThemeFromID(themeId);
+        }).catch(() => {
+            return null;
+        });
     }
 }
 
@@ -367,15 +376,18 @@ const _ThemeManager = class {
      */
     getThemeFromID(id) {
         const docRef = this._ref.doc(id);
-        const theme = new globals.Theme(id, {
-            name: docRef.get(globals.FB_KEY_THEME_NAME),
-            creator: docRef.get(globals.FB_KEY_THEME_CREATOR),
-            fgColor: docRef.get(globals.FB_KEY_THEME_FGCOLOR),
-            accentColor: docRef.get(globals.FB_KEY_THEME_ACCENT_COLOR),
-            lastTouched: docRef.get(globals.FB_KEY_THEME_LAST_TOUCHED),
-            price: docRef.get(globals.FB_KEY_THEME_PRICE),
+        return docRef.get()
+        .then((doc) => {
+            const theme = new globals.Theme(doc.id, {
+                name: doc.get(globals.FB_KEY_THEME_NAME),
+                creator: doc.get(globals.FB_KEY_THEME_CREATOR),
+                fgColor: doc.get(globals.FB_KEY_THEME_FGCOLOR),
+                accentColor: doc.get(globals.FB_KEY_THEME_ACCENT_COLOR),
+                lastTouched: doc.get(globals.FB_KEY_THEME_LAST_TOUCHED),
+                price: doc.get(globals.FB_KEY_THEME_PRICE)
+            });
+            return theme;
         });
-		return theme;
 	}
 
     /**

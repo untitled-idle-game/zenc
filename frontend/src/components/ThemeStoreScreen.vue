@@ -48,6 +48,8 @@ export default {
         const {update} = this.$refs.deleteThemeModal;
         update(theme.id);
       }).bind(this);
+
+      globals.themeManager.beginListening(this.updateStyles);
     },
     methods: {
       async loadPage() {
@@ -86,6 +88,20 @@ export default {
           </div>`;
           document.getElementById("themeBoxes").innerHTML+=themeString;
         }
+        
+    },
+    updateStyles() {
+      if (globals.authManager.isSignedIn) {
+        globals.authManager.getSelectedTheme()
+        .then((selectedTheme) => {
+          this.updateSelectedTheme(selectedTheme)
+        });
+      }
+    },
+    updateSelectedTheme(selectedTheme) {
+      // Foreground color
+      document.querySelector("#addButton").style.backgroundColor = selectedTheme.fgColor;
+      document.querySelector("#addButton").style.color = selectedTheme.accentColor;
     }
     // add() {
     //   let id = themes.length + 1;
@@ -108,13 +124,6 @@ export default {
     DeleteThemeModal
 }
 }
-</script>
-<script setup>
-  // updateEdit("asdadeadea", "", "", "", "#fffff", 0);
-  // function updateEdit(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice) {
-  //   console.log("hello");
-  //   EditThemeModal.methods.update(editid, inputName, imagesString, inputFgColor, inputAccentColor, inputPrice);
-  // }
 </script>
 <template>
   <NavigationBar/>

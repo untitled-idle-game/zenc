@@ -9,6 +9,18 @@
 <script setup>
 </script>
 <script>
+import globals from "./components/globals.js"
+
+export default {
+  mounted() {
+    globals.themeManager.beginListening(this.updateStyles);
+  },
+  methods: {
+    updateStyles() {
+
+    }
+  }
+}
 </script>
 <style>
 #app {
