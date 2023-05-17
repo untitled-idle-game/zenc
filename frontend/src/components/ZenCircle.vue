@@ -1,11 +1,16 @@
 <template>
-    <img class="circle" src="../assets/circle.png" alt=""/>
+    <!-- <img class="circle" src="../assets/circle.png" alt=""/> -->
+    <div class="circle mx-auto"></div>
 </template>
 
 <style scoped>
     .circle {
-        max-width: 20%;
-        height: auto;
+        width: 200px;
+        height: 200px;
+        max-width: 30%;
+        max-height: 30%;
+        background-color: blue;
+        border-radius: 50%;
 
         animation-name: grow;
         animation-duration: 7.5s;
