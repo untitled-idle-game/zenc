@@ -17,7 +17,14 @@ export default {
   },
   methods: {
     updateStyles() {
-
+      globals.authManager.getSelectedTheme()
+      .then(
+        (theme) => globals.storageManager.getImageUrl(theme.id)
+      )
+      .then((imageUrl) => {
+        document.body.style.backgroundImage = `url('${imageUrl}')`;
+        document.body.style.backgroundSize = 'cover';
+      })
     }
   }
 }

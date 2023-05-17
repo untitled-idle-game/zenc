@@ -1,5 +1,4 @@
 <template>
-    <NavigationBar/>
     <div id="loginPage" class="text-center">
         <img src="../assets/logo.png" id="zenLogo">
         <button class="btn" id="btnSignIn" @click.left="signIn"><img id="roseIcon" src="../assets/rose-logo.png" alt="">Sign in via Rosefire</button>
@@ -8,13 +7,9 @@
 
 <script>
 import globals from "./globals";
-import NavigationBar from './NavigationBar.vue';
 
 export default {
     name: "SignInScreen",
-    components: {
-        NavigationBar,
-    },
     methods: {
         signIn() {
             globals.authManager.signIn();

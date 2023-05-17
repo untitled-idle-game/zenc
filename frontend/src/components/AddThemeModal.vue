@@ -79,7 +79,8 @@ export default {
                 this.inputPrice
             ).then(() => {
                 if (this.inputBackground) {
-                    globals.storageManager.uploadThemeImage(this.editid, this.inputBackground);
+                    let mostRecentTheme = globals.themeManager.getThemeAtIndex(0); // there has to be a theme on the server... OR ELSE...
+                    globals.storageManager.uploadThemeImage(mostRecentTheme.id, this.inputBackground);
                 }
             });
         }

@@ -92,6 +92,10 @@ const _AuthManager = class {
     getSelectedTheme() {
         return globals.userManager.getEquippedTheme(this.uid);
     }
+
+    getZenpoints() {
+        return globals.userManager.getZenpoints(this.uid);
+    }
 }
 
 /**
@@ -233,6 +237,22 @@ const _UserManager = class {
         const userRef = this._ref.doc(uid);
         return userRef.get().then((doc) => {
             return doc.get(globals.FB_KEY_USER_SELECTED_THEME);
+        }).then(async(themeId) => {
+            return await globals.themeManager.getThemeFromID(themeId);
+        }).catch(() => {
+            return null;
+        });
+    }
+
+    /**
+     * Gets the amount of zenpoints for uid.
+     * @param {string} uid the user ID to check
+     * @returns a promise that returns the user's zenpoints
+     */
+    getZenpoints(uid) {
+        const userRef = this._ref.doc(uid);
+        return userRef.get().then((doc) => {
+            return doc.get(globals.FB_KEY_USER_ZENPOINTS);
         }).then(async(themeId) => {
             return await globals.themeManager.getThemeFromID(themeId);
         }).catch(() => {
