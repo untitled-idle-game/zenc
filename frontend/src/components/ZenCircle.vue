@@ -1,15 +1,33 @@
 <template>
     <!-- <img class="circle" src="../assets/circle.png" alt=""/> -->
-    <div class="circle mx-auto"></div>
+    <div class="circle mx-auto" :style="{
+        backgroundColor: circleColor
+    }"></div>
 </template>
+<script scoped>
+import globals from './globals.js'
 
+export default {
+    data() {
+        return {
+            circleColor: "#ffffff"
+        }
+    },
+    mounted() {
+        globals.authManager.beginListening((async() => {
+            const theme = await globals.authManager.getSelectedTheme();
+            this.circleColor = theme.accentColor;
+        }).bind(this));
+    }
+}
+</script>
 <style scoped>
     .circle {
         width: 200px;
         height: 200px;
         max-width: 30%;
         max-height: 30%;
-        background-color: blue;
+        /* background-color: blue; */
         border-radius: 50%;
 
         animation-name: grow;

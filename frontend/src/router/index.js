@@ -38,8 +38,14 @@ const router = createRouter({
             component: () => import(
                 '../components/ThemeStoreScreen.vue'
             ),
-            
         },
+        {
+            path: "/survey",
+            name: "survey",
+            component: () => import(
+                '../components/SurveyScreen.vue'
+            ),
+        }
     ]
 });
 
