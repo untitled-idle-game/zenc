@@ -3,6 +3,7 @@
   // eslint-disable-next-line
   import ZenCircle from './ZenCircle.vue';
   import NavigationBar from './NavigationBar.vue';
+  import globals from './globals.js';
 
   export default {
     name: "ZenScreen",
@@ -23,11 +24,19 @@
         } else {
           setInterval(() => {
             this.count++;
+            globals.userManager.grantZenpoints(
+              globals.authManager.uid,
+              1
+            );
           }, 15000);
         }
       }
     },
     mounted() {
+      globals.authManager.beginListening(async() => {
+        const zenpoints = await globals.authManager.getZenpoints();
+        this.count = zenpoints;
+      })
       this.incrementCount(4);
     }
   }

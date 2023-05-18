@@ -172,11 +172,10 @@ const _UserManager = class {
     /**
      * @param {uid} uid the user ID to check
      * @param {Theme} theme the theme to check
-     * @returns true if the account with the given UID can afford `theme`, false otherwise.
+     * @returns a promise that returns true if the account with the given UID can afford `theme`, false otherwise.
      */
-    canBuyTheme(uid, theme) {
-        const userRef = this._ref.doc(uid);
-        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
+    async canBuyTheme(uid, theme) {
+        const zenpoints = await this.getZenpoints(uid);
         return zenpoints >= theme.price;
     }
 
@@ -190,14 +189,17 @@ const _UserManager = class {
      */
     buyTheme(uid, theme) {
         const userRef = this._ref.doc(uid);
-        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
-        zenpoints -= theme.price;
-        const userThemes = userRef.get(globals.FB_KEY_USER_OWNED_THEMES);
-        userThemes.push(theme.id);
-        return userRef.update({
-            [globals.FB_KEY_USER_OWNED_THEMES]: userThemes,
-            [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
-        });
+        return userRef.get().then(async(doc) => {
+            let zenpoints = doc.get(globals.FB_KEY_USER_ZENPOINTS);
+            zenpoints -= theme.price;
+            const userThemes = doc.get(globals.FB_KEY_USER_OWNED_THEMES);
+            userThemes.push(theme.id);
+            return await userRef.update({
+                [globals.FB_KEY_USER_OWNED_THEMES]: userThemes,
+                [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
+            });
+        })
+        
     }
 
     /**
@@ -218,14 +220,16 @@ const _UserManager = class {
      * Gives the user with the given UID a certain amount of zenpoints.
      * @param {string} uid the user to give zenpoints to
      * @param {number} amount the amount of zenpoints to give
+     * @returns a promise incrementing the user's zenpoint count by amount
      */
     grantZenpoints(uid, amount) {
         const userRef = this._ref.doc(uid);
-        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
-        zenpoints += amount;
-        return userRef.update({
+        return userRef.get()
+        .then((ref) => ref.get(globals.FB_KEY_USER_ZENPOINTS) + amount)
+        .then(
+            (zenpoints) => userRef.update({
             [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
-        });
+        }));
     }
 
     /**
