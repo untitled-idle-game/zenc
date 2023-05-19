@@ -71,6 +71,10 @@ textarea {
     border: 1px solid white;
     border-radius: 5px;
     padding: 10px;
+    color: white;
+}
+#whyTextArea {
+    color: white;
 }
 textarea::placeholder {
     color: rgba(255, 255, 255, 0.75);
