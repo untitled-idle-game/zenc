@@ -36,7 +36,7 @@ const _AuthManager = class {
                 location.href = "/login";
             }
             if (onLoginPage && isSignedIn) {
-                location.href = "/";
+                location.href = "/survey";
             }
 	    });
     }

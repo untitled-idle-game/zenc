@@ -55,6 +55,9 @@
     </div>
     <ZenCircle />
   </div>
+  <audio autoplay>
+    <source src="../assets/zenc-music.mp3" type="audio/mpeg">
+  </audio>
 </template>
 <style scoped>
   .pointCount {
