@@ -10,7 +10,8 @@
     data() {
       return {
         count: 0,
-        textColor: "#ffffff"
+        textColor: "#ffffff",
+        textShadow: "#000000",
       }
     },
     components: {
@@ -39,6 +40,7 @@
         const theme = await globals.authManager.getSelectedTheme();
         this.count = zenpoints;
         this.textColor = theme.accentColor;
+        this.textShadow = theme.fgColor;
       })
       this.incrementCount(4);
     }
@@ -49,7 +51,7 @@
   <!-- Put navBar here when it is implemented -->
   <NavigationBar/>
   <div class="container page-container text-center">
-  <div class="pointCount" :style="{ color: textColor }">
+  <div class="pointCount" :style="{ color: textColor, textShadow: `-1px 1px 2px ${textShadow}, 1px 1px 2px ${textShadow}, 1px -1px 0 ${textShadow}, -1px -1px 0 ${textShadow}`}">
       <p id="count">{{ count }}</p>
       <p>Zen Points</p>
     </div>
