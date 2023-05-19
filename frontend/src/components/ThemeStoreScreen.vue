@@ -55,6 +55,14 @@ export default {
     methods: {
       async loadPage() {
         document.getElementById("themeBoxes").innerHTML="";
+        let selectedTheme;
+        let themes;
+        await  globals.authManager.getSelectedTheme().then(selTheme=>{
+          selectedTheme = selTheme;
+        });
+       await globals.userManager.getOwnedThemes(globals.authManager.uid).then(thems=> {
+        themes = thems;
+       });
         for (let i = 0; i < globals.themeManager.length; i++) {
           let theme = globals.themeManager.getThemeAtIndex(i);
           let themeImage = ""
@@ -66,12 +74,11 @@ export default {
             themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
           });//
           let editanddeleteButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined editButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button data-v-8f2b0d58 class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "deleteButton${i}"  data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
-          globals.authManager.getSelectedTheme().then(selectedTheme=>{
+    
             
             let buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">shopping_cart_checkout</button>`;
           
-      globals.userManager.getOwnedThemes(globals.authManager.uid).then(themes=> {
-            for (let i2 = 0; i2<themes.length; i2++) {
+          for (let i2 = 0; i2<themes.length; i2++) {
             if (themes[i2] == theme.id || theme.price == 0) {
               buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">add_circle</button>`;
             }
@@ -102,18 +109,16 @@ export default {
             ${buyandequipButton}
           </div>`;
           document.getElementById("themeBoxes").innerHTML+=themeString;
-          if (selectedTheme.id != theme.id) {
+        }
+        for (let i = 0; i < globals.themeManager.length; i++) {
+          let theme = globals.themeManager.getThemeAtIndex(i);
             let uid = globals.authManager.uid;
             let e = document.getElementById(`bneButton${i}`);
-            console.log(e);
-            console.log(i);
+            if (e) {
             //TODO: Please look at, REFUSES TO WORK, works if you run it in console works if its the last theme.
-            e.addEventListener("click", () => this.clickbne(theme, uid));
-          }
-        });
-          });
+              e.addEventListener("click", () => this.clickbne(theme, uid));
+            }
         }
-        
     },
     updateStyles() {
       if (globals.authManager.isSignedIn) {
@@ -128,26 +133,23 @@ export default {
       document.querySelector("#addButton").style.backgroundColor = selectedTheme.fgColor;
       document.querySelector("#addButton").style.color = selectedTheme.accentColor;
     },
-    clickbne(theme, uid) {
-      console.log(theme.price);
+    async clickbne(theme, uid) {
       let isPurchased = false;
-      globals.userManager.getOwnedThemes(uid).then(themes=> {
-        console.log(themes);
+      let themes = [];
+      await globals.userManager.getOwnedThemes(uid).then(them=> {
+        themes = them;
+      });
       for (let i2 = 0; i2<themes.length; i2++) {
-        if (themes[i2] == theme.id || theme.price == 0) {
+        if (themes [i2] == theme.id || theme.price == 0) {
           isPurchased = true;
         }
       }
-      console.log(isPurchased);
       if (!isPurchased && globals.userManager.canBuyTheme(uid, theme)) {
           globals.userManager.buyTheme(uid, theme);
       }
       if (isPurchased) {
-      
-        globals.userManager.equipTheme(uid, theme);
+        await globals.userManager.equipTheme(uid, theme);
       }
-
-      });
       this.loadPage();
     }
     // add() {
