@@ -1,4 +1,6 @@
 <!-- TODO: Eric: We need a database or atleast a JSON template I can use, since the themes are user uploaded I can't simply hard code theme screens. --->
+<script setup>
+</script>
 <script>
 import NavigationBar from './NavigationBar.vue';
 import AddThemeModal from './AddThemeModal.vue';
@@ -48,7 +50,6 @@ export default {
         const {update} = this.$refs.deleteThemeModal;
         update(theme.id);
       }).bind(this);
-
       globals.themeManager.beginListening(this.updateStyles);
     },
     methods: {
@@ -65,6 +66,19 @@ export default {
             themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
           });//
           let editanddeleteButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined editButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button data-v-8f2b0d58 class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "deleteButton${i}"  data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
+          globals.authManager.getSelectedTheme().then(selectedTheme=>{
+            
+            let buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">shopping_cart_checkout</button>`;
+          
+      globals.userManager.getOwnedThemes(globals.authManager.uid).then(themes=> {
+            for (let i2 = 0; i2<themes.length; i2++) {
+            if (themes[i2] == theme.id || theme.price == 0) {
+              buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">add_circle</button>`;
+            }
+          }
+          if (selectedTheme.id == theme.id) {
+            buyandequipButton = "";
+          }
           if (theme.creator!=globals.authManager.uid) {
             editanddeleteButton = "";
           }
@@ -85,8 +99,19 @@ export default {
             1px -1px 0 ${theme.accentColor},
             -1px -1px 0 ${theme.accentColor};">(${theme.price} ZP)</p>
             ${editanddeleteButton}
+            ${buyandequipButton}
           </div>`;
           document.getElementById("themeBoxes").innerHTML+=themeString;
+          if (selectedTheme.id != theme.id) {
+            let uid = globals.authManager.uid;
+            let e = document.getElementById(`bneButton${i}`);
+            console.log(e);
+            console.log(i);
+            //TODO: Please look at, REFUSES TO WORK, works if you run it in console works if its the last theme.
+            e.addEventListener("click", () => this.clickbne(theme, uid));
+          }
+        });
+          });
         }
         
     },
@@ -102,6 +127,28 @@ export default {
       // Foreground color
       document.querySelector("#addButton").style.backgroundColor = selectedTheme.fgColor;
       document.querySelector("#addButton").style.color = selectedTheme.accentColor;
+    },
+    clickbne(theme, uid) {
+      console.log(theme.price);
+      let isPurchased = false;
+      globals.userManager.getOwnedThemes(uid).then(themes=> {
+        console.log(themes);
+      for (let i2 = 0; i2<themes.length; i2++) {
+        if (themes[i2] == theme.id || theme.price == 0) {
+          isPurchased = true;
+        }
+      }
+      console.log(isPurchased);
+      if (!isPurchased && globals.userManager.canBuyTheme(uid, theme)) {
+          globals.userManager.buyTheme(uid, theme);
+      }
+      if (isPurchased) {
+      
+        globals.userManager.equipTheme(uid, theme);
+      }
+
+      });
+      this.loadPage();
     }
     // add() {
     //   let id = themes.length + 1;
@@ -160,6 +207,11 @@ export default {
     position: absolute;
       right:5%;
       bottom: 50px;
+  }
+  .bneButtons {
+    position: absolute;
+      right:5%;
+      bottom: 112.5px;
   }
   .author {
     color:white;

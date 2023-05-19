@@ -176,8 +176,10 @@ const _UserManager = class {
      */
     canBuyTheme(uid, theme) {
         const userRef = this._ref.doc(uid);
-        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
-        return zenpoints >= theme.price;
+        return userRef.get().then((doc)=>{
+            let zenpoints = doc.get(globals.FB_KEY_USER_ZENPOINTS);
+            return zenpoints >= theme.price;
+        });
     }
 
     /**
@@ -190,13 +192,16 @@ const _UserManager = class {
      */
     buyTheme(uid, theme) {
         const userRef = this._ref.doc(uid);
-        let zenpoints = userRef.get(globals.FB_KEY_USER_ZENPOINTS);
+        return userRef.get().then((doc)=>{
+        let zenpoints = doc.get(globals.FB_KEY_USER_ZENPOINTS);
         zenpoints -= theme.price;
-        const userThemes = userRef.get(globals.FB_KEY_USER_OWNED_THEMES);
+        const userThemes = doc.get(globals.FB_KEY_USER_OWNED_THEMES);
         userThemes.push(theme.id);
         return userRef.update({
             [globals.FB_KEY_USER_OWNED_THEMES]: userThemes,
             [globals.FB_KEY_USER_ZENPOINTS]: zenpoints
+        });
+        
         });
     }
 
