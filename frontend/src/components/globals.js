@@ -331,7 +331,7 @@ const _ThemeManager = class {
             [globals.FB_KEY_THEME_ACCENT_COLOR]: accentColor,
             [globals.FB_KEY_THEME_PRICE]: price,
 			[globals.FB_KEY_THEME_LAST_TOUCHED]: firebase.firestore.Timestamp.now()
-		});
+		}).then((doc) => doc.id);
 	}
 
 	beginListening(changeListener) {

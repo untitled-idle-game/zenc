@@ -85,6 +85,8 @@ export default {
                 if (this.inputBackground) {
                     globals.storageManager.uploadThemeImage(this.editid, this.inputBackground);
                 }
+                // eslint-disable-next-line
+                location.href = location.href;
             });
         },
         update(editid, inputName, inputFgColor, inputAccentColor, inputPrice) {

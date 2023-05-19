@@ -149,6 +149,7 @@ export default {
       }
       if (isPurchased) {
         await globals.userManager.equipTheme(uid, theme);
+        location.href = location.href; // Reload page
       }
       this.loadPage();
     }

@@ -77,11 +77,13 @@ export default {
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            ).then(() => {
+            ).then(async(themeId) => {
                 if (this.inputBackground) {
-                    let mostRecentTheme = globals.themeManager.getThemeAtIndex(0); // there has to be a theme on the server... OR ELSE...
-                    globals.storageManager.uploadThemeImage(mostRecentTheme.id, this.inputBackground);
+                    console.log(themeId);
+                    globals.storageManager.uploadThemeImage(themeId, this.inputBackground);
                 }
+                // eslint-disable-next-line
+                location.href = location.href;
             });
         }
     },
