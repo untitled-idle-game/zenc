@@ -72,18 +72,23 @@ export default {
             this.inputBackground = event.target.files[0];
         },
         addTheme() {
+            if (!this.inputBackground) {
+                this.errorText = "Please upload a background.";
+                return;
+            }
             globals.themeManager.add(
                 this.inputName,
                 this.inputFgColor,
                 this.inputAccentColor,
                 this.inputPrice
-            ).then(async(themeId) => {
+            ).then((themeId) => {
                 if (this.inputBackground) {
                     console.log(themeId);
-                    globals.storageManager.uploadThemeImage(themeId, this.inputBackground);
+                    globals.storageManager.uploadThemeImage(themeId, this.inputBackground).then(() => {
+                        // eslint-disable-next-line
+                        location.href = location.href;
+                    });
                 }
-                // eslint-disable-next-line
-                location.href = location.href;
             });
         }
     },

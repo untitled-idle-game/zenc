@@ -19,7 +19,7 @@ globals.FB_KEY_THEME_ACCENT_COLOR = "accentColor";
 globals.FB_KEY_THEME_LAST_TOUCHED = "lastTouched";
 globals.FB_KEY_THEME_PRICE = "price";
 
-globals.FB_DEFAULT_THEME_KEY = "jQAoRePgO4sz8LgaNKu4";
+globals.FB_DEFAULT_THEME_KEY = "wqYUnjG3SrDcd2fruaBI";
 
 /**
  * Authorization manager singleton. Do not instantiate this class - use globals.authManager instead.
@@ -241,10 +241,10 @@ const _UserManager = class {
         const userRef = this._ref.doc(uid);
         return userRef.get().then((doc) => {
             return doc.get(globals.FB_KEY_USER_SELECTED_THEME);
-        }).then(async(themeId) => {
-            return await globals.themeManager.getThemeFromID(themeId);
+        }).then((themeId) => {
+            return globals.themeManager.getThemeFromID(themeId);
         }).catch(() => {
-            return null;
+            return globals.themeManager.getThemeFromID(globals.FB_DEFAULT_THEME_KEY);
         });
     }
 
@@ -422,7 +422,8 @@ const _ThemeManager = class {
                 price: doc.get(globals.FB_KEY_THEME_PRICE)
             });
             return theme;
-        });
+        })
+        .catch(() => this.getThemeFromID(globals.FB_DEFAULT_THEME_KEY));
 	}
 
     /**
@@ -455,6 +456,11 @@ const _StorageManager = class {
     getImageUrl(themeId) {
         const storageRef = firebase.storage().ref().child("backgroundImages/" + themeId);
         return storageRef.getDownloadURL();
+    }
+
+    removeImageUrl(themeId) {
+        const storageRef = firebase.storage().ref().child("backgroundImages/" + themeId);
+        return storageRef.delete();
     }
 }
 

@@ -67,19 +67,22 @@ export default {
           let theme = globals.themeManager.getThemeAtIndex(i);
           let themeImage = ""
           await globals.storageManager.getImageUrl(theme.id).then((imageURL) => {
-            themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${imageURL}); top:${100+400*i}px">`
+            themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background-image: url(${imageURL}); background-size: cover; background-position: 0% 50%; top:${100+400*i}px">`
           })
           .catch(() => {
             // TODO: Eric - include what happens when the image is not found
             themeImage = `<div data-v-8f2b0d58 class = "themebox" style = "background: ${theme.fgColor}; top:${100+400*i}px">`
           });//
-          let editanddeleteButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined editButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button><button data-v-8f2b0d58 class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "deleteButton${i}"  data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
+          let editanddeleteButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined editButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "editButton${i}" data-edit-id="${i}" data-toggle = "modal" data-target="#editThemeModal">edit</button>`;
+          if (selectedTheme.id != theme.id) {
+            editanddeleteButton += `<button data-v-8f2b0d58 class = "btn bmd-btn-fab deleteButtons material-symbols-outlined" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "deleteButton${i}"  data-delete-id="${i}" data-toggle = "modal" data-target="#deleteThemeModal">delete</button>`;
+          }
     
             
             let buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">shopping_cart_checkout</button>`;
           
           for (let i2 = 0; i2<themes.length; i2++) {
-            if (themes[i2] == theme.id || theme.price == 0) {
+            if (themes[i2] == theme.id || theme.price == 0 || theme.creator == globals.authManager.uid) {
               buyandequipButton = `<button data-v-8f2b0d58 class = "btn bmd-btn-fab material-symbols-outlined bneButtons" style = "color: ${theme.fgColor}; background: ${theme.accentColor};" id = "bneButton${i}">add_circle</button>`;
             }
           }

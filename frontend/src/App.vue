@@ -24,6 +24,7 @@ export default {
       .then((imageUrl) => {
         document.body.style.backgroundImage = `url('${imageUrl}')`;
         document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundAttachment = 'fixed';
       })
     }
   }

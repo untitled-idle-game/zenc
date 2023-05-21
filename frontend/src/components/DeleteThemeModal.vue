@@ -44,6 +44,9 @@ export default {
             globals.themeManager.delete(
                 this.deleteid
             );
+            globals.storageManager.removeImageUrl(
+              this.deleteid
+            ).catch(() => console.log("Image not found"));
         },
         update(deleteid) {
             this.deleteid = deleteid;
